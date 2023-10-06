@@ -26,9 +26,13 @@ public class ConnectionServiceImpl implements ConnectionService {
     public ResponseEntity<?> addRequest(Connectiondetails connectiondetails) {
         Connectiondetails follower = isFollower(connectiondetails.getUser1().getUserId(), connectiondetails.getUser2().getUserId());
         Connectiondetails isfollowing = isFollower(connectiondetails.getUser2().getUserId(), connectiondetails.getUser1().getUserId());
+
         User user = userRepoService.findByUserId(connectiondetails.getUser1().getUserId());
         User user1 = userRepoService.findByUserId(connectiondetails.getUser2().getUserId());
         connectiondetails.setCreatedDate(new Date());
+
+        System.out.println(follower);
+        System.out.println(isfollowing);
 
         if (follower != null && isfollowing == null) {
             connectiondetails.setStatus(new Status(4L));
@@ -42,7 +46,7 @@ public class ConnectionServiceImpl implements ConnectionService {
             connectionRepoService.saveFollowRequest(isfollowing);
             return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
         }
-        if (isfollowing == null && follower == null) {
+        if (isfollowing == null) {
             if (user.getAccountType().equals("public") && user1.getAccountType().equals("private")) {
                 connectiondetails.setStatus(new Status(1L));
             } else if (user.getAccountType().equals("public") && user1.getAccountType().equals("public")) {
@@ -52,8 +56,11 @@ public class ConnectionServiceImpl implements ConnectionService {
             } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("public")) {
                 connectiondetails.setStatus(new Status(4L));
             }
+            return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
         }
-        return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
+        else {
+            return new ResponseEntity<>("Already Friends", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
