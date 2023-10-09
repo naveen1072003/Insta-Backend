@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table
@@ -35,6 +36,9 @@ public class User {
 
     @Column
     private Date createdDate;
+
+    @ManyToMany
+    private List<Interests> interests;
 
     @Column
     private String accountType;

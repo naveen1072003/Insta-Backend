@@ -4,6 +4,7 @@ import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.UserRepo;
 import com.insta.instadb.repository.service.UserRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
+
 public class UserRepoImpl implements UserRepoService {
 
     @Autowired

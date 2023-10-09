@@ -13,19 +13,26 @@ import java.util.Date;
 @Setter
 @Getter
 @ToString
-public class Media {
-
+public class ChatsList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private String mediaContent;
+    @ManyToOne
+    private User user1;
+
+    @ManyToOne
+    private User user2;
 
     @Column
-    private String mediaType;
+    private String avatarColor;
+
+    @Column
+    private String avatarText;
+
+    @Column
+    private String lastMessage;
 
     @Column
     private Date date;
-
 }

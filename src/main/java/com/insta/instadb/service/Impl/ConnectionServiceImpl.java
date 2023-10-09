@@ -31,9 +31,6 @@ public class ConnectionServiceImpl implements ConnectionService {
         User user1 = userRepoService.findByUserId(connectiondetails.getUser2().getUserId());
         connectiondetails.setCreatedDate(new Date());
 
-        System.out.println(follower);
-        System.out.println(isfollowing);
-
         if (follower != null && isfollowing == null) {
             connectiondetails.setStatus(new Status(4L));
             follower.setStatus(new Status(4L));

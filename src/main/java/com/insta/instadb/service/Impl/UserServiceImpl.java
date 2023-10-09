@@ -18,20 +18,19 @@ public class UserServiceImpl implements UserService {
     private UserRepoService userRepoService;
 
 
-     @Override
+    @Override
     public ResponseEntity<?> saveNewUser(User user) {
-         if (checkIfUser(user.getEmail())){
-             return new ResponseEntity<>(user.getUserName(), HttpStatus.BAD_REQUEST);
-         }
-         else{
-             user.setCreatedDate(new Date());
-             return new ResponseEntity<>(userRepoService.save(user),HttpStatus.OK);
-         }
+        if (checkIfUser(user.getEmail())) {
+            return new ResponseEntity<>(user.getUserName(), HttpStatus.BAD_REQUEST);
+        } else {
+            user.setCreatedDate(new Date());
+            return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
+        }
     }
 
     @Override
     public boolean checkIfUser(String email) {
-       User user = userRepoService.findUserByEmail(email);
+        User user = userRepoService.findUserByEmail(email);
         return user != null;
     }
 
