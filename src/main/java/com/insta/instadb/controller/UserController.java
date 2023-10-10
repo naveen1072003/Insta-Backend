@@ -17,4 +17,9 @@ public class UserController implements UserApi {
     public ResponseEntity<?> newUser(User user) {
         return new ResponseEntity<>(userService.saveNewUser(user),HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> checkUserName(String name) {
+        return userService.validateUserName(name);
+    }
 }

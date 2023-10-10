@@ -15,4 +15,5 @@ public interface UserService {
 
     Optional<User> findUserById(Long userId);
 
+    ResponseEntity<?> validateUserName(String name);
 }

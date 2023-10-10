@@ -3,6 +3,7 @@ package com.insta.instadb.service.Impl;
 import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.service.UserRepoService;
 import com.insta.instadb.service.UserService;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,6 @@ public class UserServiceImpl implements UserService {
         if (checkIfUser(user.getEmail())) {
             return new ResponseEntity<>(user.getUserName(), HttpStatus.BAD_REQUEST);
         } else {
-            user.setCreatedDate(new Date());
             return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
         }
     }
@@ -37,5 +37,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<User> findUserById(Long userId) {
         return Optional.ofNullable(userRepoService.findByUserId(userId));
+    }
+
+    @Override
+    public ResponseEntity<?> validateUserName(String name) {
+        User user = userRepoService.isUserNamePresent(name);
+        if(user != null){
+            return new ResponseEntity<>("Username already exists",HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Valid Username", HttpStatus.OK);
     }
 }

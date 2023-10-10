@@ -25,5 +25,10 @@ public class UserRepoImpl implements UserRepoService {
         return userRepo.findById(id).get();
     }
 
+    @Override
+    public User isUserNamePresent(String name) {
+        return userRepo.findByUserName(name);
+    }
+
 
 }

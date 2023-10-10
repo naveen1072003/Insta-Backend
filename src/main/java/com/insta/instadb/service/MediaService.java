@@ -6,6 +6,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface MediaService {
-
     ResponseEntity<?> saveMedia(Media media);
+
+    ResponseEntity<?> getMediaByUser(Long userId);
+
+    ResponseEntity<?> addInterests(String interests);
 }

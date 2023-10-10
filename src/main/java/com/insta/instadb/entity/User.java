@@ -4,7 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
+@EntityListeners(AuditingEntityListener.class)
 public class User {
 
     @Id
@@ -21,6 +25,12 @@ public class User {
 
     @Column
     private String userName;
+
+    @Column
+    private String firstName;
+
+    @Column
+    private String lastName;
 
     @Column
     private String userProfile;
@@ -34,10 +44,17 @@ public class User {
     @Column
     private String password;
 
-    @Column
-    private Date createdDate;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Timestamp createdDate;
 
-    @ManyToMany
+    @Column
+    private String gender;
+
+    @Column
+    private String dateOfBirth;
+
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Interests> interests;
 
     @Column
