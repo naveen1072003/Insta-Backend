@@ -64,4 +64,15 @@ public class ConnectionServiceImpl implements ConnectionService {
     public Connectiondetails isFollower(Long sender, Long receiver) {
         return connectionRepoService.findBySenderandReceiver(sender, receiver);
     }
+
+    @Override
+    public Long getFollowersCount(Long userId) {
+        return connectionRepoService.getFrCount(userId);
+    }
+
+    @Override
+    public Long getFollowingCount(Long userId) {
+        return connectionRepoService.getFgCount(userId);
+
+    }
 }

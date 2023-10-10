@@ -15,7 +15,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
-@ToString
+//@ToString
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 

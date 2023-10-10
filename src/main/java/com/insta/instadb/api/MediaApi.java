@@ -12,8 +12,11 @@ public interface MediaApi {
     @PostMapping("/addMedia")
     ResponseEntity<?> addNewMedia(Media media);
 
-    @GetMapping("/getMedia/{userId}")
+    @GetMapping("/getAllMedia/{userId}")
     ResponseEntity<?> getMediaByUser(Long userId);
+
+    @GetMapping("/getMediaCount/{userId}")
+    ResponseEntity<?> getMediaCount(Long userId);
 
     @PostMapping("/addInterest/{interests}")
     ResponseEntity<?> addInterest(String interests);

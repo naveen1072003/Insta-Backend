@@ -19,4 +19,13 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
         return connectionRepo.findByUser1_UserIdAndUser2_UserId(sender,receiver);
     }
 
+    @Override
+    public Long getFrCount(Long userId) {
+        return connectionRepo.countConnectiondetailsByUser2_UserId(userId);
+    }
+
+    @Override
+    public Long getFgCount(Long userId) {
+        return connectionRepo.countAllByUser1_UserId(userId);
+    }
 }

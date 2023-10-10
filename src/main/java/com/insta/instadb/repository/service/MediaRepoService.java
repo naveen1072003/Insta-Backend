@@ -1,6 +1,7 @@
 package com.insta.instadb.repository.service;
 
 import com.insta.instadb.entity.Media;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,4 +11,6 @@ public interface MediaRepoService {
     Media save(Media media);
 
     List<Media> findMediaByUser_Id(Long userId);
+
+    Long findMediaCount(Long userId);
 }

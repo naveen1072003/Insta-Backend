@@ -11,4 +11,6 @@ public interface MediaService {
     ResponseEntity<?> getMediaByUser(Long userId);
 
     ResponseEntity<?> addInterests(String interests);
+
+    ResponseEntity<?> getCount(Long userId);
 }

@@ -7,4 +7,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConnectionRepo extends JpaRepository<Connectiondetails, Long> {
    Connectiondetails findByUser1_UserIdAndUser2_UserId(Long sender,Long receiver);
+
+   Long countConnectiondetailsByUser2_UserId(Long userId);
+
+   Long countAllByUser1_UserId(Long userId);
 }

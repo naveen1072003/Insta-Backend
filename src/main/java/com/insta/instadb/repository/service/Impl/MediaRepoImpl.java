@@ -20,4 +20,9 @@ public class MediaRepoImpl implements MediaRepoService {
     public List<Media> findMediaByUser_Id(Long userId) {
         return mediaRepo.findAllByUsers_UserId(userId);
     }
+
+    @Override
+    public Long findMediaCount(Long userId) {
+        return mediaRepo.countAllByUsers_UserId(userId);
+    }
 }

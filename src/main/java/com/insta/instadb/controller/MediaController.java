@@ -27,6 +27,11 @@ public class MediaController implements MediaApi {
     }
 
     @Override
+    public ResponseEntity<?> getMediaCount(@PathVariable Long userId) {
+        return mediaService.getCount(userId);
+    }
+
+    @Override
     public ResponseEntity<?> addInterest(@PathVariable String interests) {
         System.out.println(interests);
         return mediaService.addInterests(interests);

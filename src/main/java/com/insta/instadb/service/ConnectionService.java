@@ -9,4 +9,8 @@ public interface ConnectionService {
     ResponseEntity<?> addRequest(Connectiondetails connectiondetails);
 
     Connectiondetails isFollower(Long sender,Long receiver);
+
+    Long getFollowersCount(Long userId);
+    Long getFollowingCount(Long userId);
+
 }

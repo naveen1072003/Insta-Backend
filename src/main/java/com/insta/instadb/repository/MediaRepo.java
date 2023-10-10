@@ -11,4 +11,6 @@ public interface MediaRepo extends JpaRepository<Media, Long> {
 
     List<Media> findAllByUsers_UserId(Long userId);
 
+    Long countAllByUsers_UserId(Long userId);
+
 }
