@@ -1,5 +1,6 @@
 package com.insta.instadb.service;
 
+import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
@@ -16,4 +17,6 @@ public interface UserService {
     Optional<User> findUserById(Long userId);
 
     ResponseEntity<?> validateUserName(String name);
+
+    ResponseEntity<?> authorizeUser(LoginDTO loginDTO);
 }

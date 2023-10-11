@@ -1,5 +1,6 @@
 package com.insta.instadb.api;
 
+import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,9 @@ public interface UserApi {
     @PostMapping("/newUser")
     ResponseEntity<?> newUser(@RequestBody User user);
 
-    @GetMapping
+    @GetMapping("/isUser")
     ResponseEntity<?> checkUserName(String Name);
+
+    @PostMapping("/loginAuth")
+    ResponseEntity<?> authUser(LoginDTO loginDTO);
 }

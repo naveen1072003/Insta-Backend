@@ -5,6 +5,8 @@ import com.insta.instadb.repository.UserRepo;
 import com.insta.instadb.repository.service.UserRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class UserRepoImpl implements UserRepoService {
 
     @Autowired
@@ -16,7 +18,7 @@ public class UserRepoImpl implements UserRepoService {
     }
 
     @Override
-    public User findUserByEmail(String email) {
+    public Optional<User> findUserByEmail(String email) {
         return userRepo.findByEmail(email);
     }
 
