@@ -30,4 +30,9 @@ public class UserController implements UserApi {
     public ResponseEntity<?> authUser(@RequestBody LoginDTO loginDTO) {
         return userService.authorizeUser(loginDTO);
     }
+
+    @Override
+    public ResponseEntity<?> friendsList(@PathVariable Long userId) {
+        return userService.getFriendsList(userId);
+    }
 }

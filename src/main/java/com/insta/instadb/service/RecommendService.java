@@ -9,4 +9,6 @@ import java.util.List;
 @Service
 public interface RecommendService {
     ResponseEntity<?> getRecommendUsers(Long userId);
+
+    ResponseEntity<?> getRecommendMedia(Long userId);
 }

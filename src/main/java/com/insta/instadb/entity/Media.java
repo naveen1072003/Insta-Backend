@@ -33,7 +33,6 @@ public class Media {
     @CreatedDate
     private Timestamp uploadedDate;
 
-    @JsonIgnore
     @ManyToOne
     private User users;
 

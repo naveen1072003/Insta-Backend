@@ -13,4 +13,6 @@ public interface MediaRepoService {
     List<Media> findMediaByUser_Id(Long userId);
 
     Long findMediaCount(Long userId);
+
+    List<Media> getAllMedia();
 }

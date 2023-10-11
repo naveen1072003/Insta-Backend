@@ -19,4 +19,6 @@ public interface UserService {
     ResponseEntity<?> validateUserName(String name);
 
     ResponseEntity<?> authorizeUser(LoginDTO loginDTO);
+
+    ResponseEntity<?> getFriendsList(Long userId);
 }

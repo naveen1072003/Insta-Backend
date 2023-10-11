@@ -20,7 +20,7 @@ public class CommentRepoImpl implements CommentRepoService {
 
     @Override
     public List<Comments> getComment(Long id) {
-        System.out.println(id+"comment");
+        System.out.println(id);
         return commentRepo.findAllByMedia_Id(id);
     }
 }

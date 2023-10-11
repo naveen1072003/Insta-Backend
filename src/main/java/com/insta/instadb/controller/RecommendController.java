@@ -21,4 +21,9 @@ public class RecommendController implements RecommendationApi {
     public ResponseEntity<?> reCommend(@PathVariable Long userId) {
        return recommendService.getRecommendUsers(userId);
     }
+
+    @Override
+    public ResponseEntity<?> reCommendMedia(@PathVariable Long userId) {
+        return recommendService.getRecommendMedia(userId);
+    }
 }

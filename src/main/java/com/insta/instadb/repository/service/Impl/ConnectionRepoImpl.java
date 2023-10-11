@@ -1,9 +1,12 @@
 package com.insta.instadb.repository.service.Impl;
 
 import com.insta.instadb.entity.Connectiondetails;
+import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.ConnectionRepo;
 import com.insta.instadb.repository.service.ConnectionRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 public class ConnectionRepoImpl implements ConnectionRepoService {
 
@@ -27,5 +30,10 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
     @Override
     public Long getFgCount(Long userId) {
         return connectionRepo.countAllByUser1_UserId(userId);
+    }
+
+    @Override
+    public List<Connectiondetails> findFriendsList(Long userId) {
+        return connectionRepo.findConnectiondetailsByUser1_UserIdAndStatus_Id(userId,4L);
     }
 }

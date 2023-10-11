@@ -11,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ConnectionServiceImpl implements ConnectionService {
@@ -45,13 +47,13 @@ public class ConnectionServiceImpl implements ConnectionService {
         }
         if (isfollowing == null) {
             if (user.getAccountType().equals("public") && user1.getAccountType().equals("private")) {
-                connectiondetails.setStatus(new Status(1L));
+                connectiondetails.setStatus(new Status(2L));
             } else if (user.getAccountType().equals("public") && user1.getAccountType().equals("public")) {
-                connectiondetails.setStatus(new Status(4L));
-            } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("private")) {
                 connectiondetails.setStatus(new Status(1L));
+            } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("private")) {
+                connectiondetails.setStatus(new Status(2L));
             } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("public")) {
-                connectiondetails.setStatus(new Status(4L));
+                connectiondetails.setStatus(new Status(1L));
             }
             return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
         }
@@ -74,5 +76,10 @@ public class ConnectionServiceImpl implements ConnectionService {
     public Long getFollowingCount(Long userId) {
         return connectionRepoService.getFgCount(userId);
 
+    }
+
+    @Override
+    public List<Connectiondetails> findFriends(Long userId) {
+        return connectionRepoService.findFriendsList(userId);
     }
 }

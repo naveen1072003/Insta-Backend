@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api/v1/")
 public interface RecommendationApi {
 
-    @GetMapping("/recommend/{userId}")
+    @GetMapping("/recommendedUsers/{userId}")
     ResponseEntity<?> reCommend(Long userId);
+
+    @GetMapping("/recommendedMedia/{userId}")
+    ResponseEntity<?> reCommendMedia(Long userId);
 }

@@ -3,10 +3,11 @@ package com.insta.instadb.service.Impl;
 import com.insta.instadb.auth.JwtService;
 import com.insta.instadb.auth.UserDetailsInfo;
 import com.insta.instadb.dto.LoginDTO;
+import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.service.UserRepoService;
+import com.insta.instadb.service.ConnectionService;
 import com.insta.instadb.service.UserService;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +31,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private ConnectionService connectionService;
+
+    @Autowired
     private JwtService jwtService;
+
     @Override
     public ResponseEntity<?> saveNewUser(User user) {
         if (checkIfUser(user.getEmail())) {
@@ -54,8 +60,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public ResponseEntity<?> validateUserName(String name) {
         User user = userRepoService.isUserNamePresent(name);
-        if(user != null){
-            return new ResponseEntity<>("Username already exists",HttpStatus.OK);
+        if (user != null) {
+            return new ResponseEntity<>("Username already exists", HttpStatus.OK);
         }
         return new ResponseEntity<>("Valid Username", HttpStatus.OK);
     }
@@ -64,15 +70,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public ResponseEntity<?> authorizeUser(LoginDTO loginDTO) {
         Optional<User> customerDetails = userRepoService.findUserByEmail(loginDTO.getEmail());
 
-        if(customerDetails.isEmpty()){
+        if (customerDetails.isEmpty()) {
             return ResponseEntity.ok("User does not exist!");
-        }
-        else {
+        } else {
             if (passwordEncoder.matches(loginDTO.getPassword(), customerDetails.get().getPassword())) {
-                return new ResponseEntity<>(jwtService.generateToken(loginDTO.getEmail()),HttpStatus.OK);
+                return new ResponseEntity<>(jwtService.generateToken(loginDTO.getEmail()), HttpStatus.OK);
             }
-            return new ResponseEntity<>("You have entered wrong password",HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("You have entered wrong password", HttpStatus.NO_CONTENT);
         }
+    }
+
+    @Override
+    public ResponseEntity<?> getFriendsList(Long userId) {
+        List<Connectiondetails> mutual = connectionService.findFriends(userId);
+
+        List<User> userList = new ArrayList<>();
+        for (Connectiondetails connectiondetails : mutual) {
+            userList.add(userRepoService.findByUserId(connectiondetails.getUser2().getUserId()));
+        }
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
 

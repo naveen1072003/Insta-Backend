@@ -18,4 +18,7 @@ public interface UserApi {
 
     @PostMapping("/loginAuth")
     ResponseEntity<?> authUser(LoginDTO loginDTO);
+
+    @GetMapping("/getFriendsList/{userId}")
+    ResponseEntity<?> friendsList(Long userId);
 }

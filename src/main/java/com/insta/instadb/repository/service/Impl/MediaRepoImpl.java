@@ -25,4 +25,9 @@ public class MediaRepoImpl implements MediaRepoService {
     public Long findMediaCount(Long userId) {
         return mediaRepo.countAllByUsers_UserId(userId);
     }
+
+    @Override
+    public List<Media> getAllMedia() {
+        return mediaRepo.findAll();
+    }
 }
