@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InterestRepo extends JpaRepository<Interests,Long> {
+    Interests findInterestsByContent(String s);
 }

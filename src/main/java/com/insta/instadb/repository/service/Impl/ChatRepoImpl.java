@@ -1,6 +1,8 @@
 package com.insta.instadb.repository.service.Impl;
 
+import com.insta.instadb.dto.UserChatDTO;
 import com.insta.instadb.entity.Chats;
+import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.ChatRepo;
 import com.insta.instadb.repository.service.ChatRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,8 @@ public class ChatRepoImpl implements ChatRepoService {
     }
 
     @Override
-    public List<Chats> getAllChats(Long userId) {
-        return chatRepo.findAllByUser1_UserIdOrUser2_UserId(userId, userId);
+    public List<Chats> getAllChats(UserChatDTO userChatDTO) {
+        return chatRepo.findAllByUser1_UserIdOrUser2_UserId(userChatDTO.getUser1(), userChatDTO.getUser2());
     }
+
 }

@@ -21,4 +21,6 @@ public interface UserService {
     ResponseEntity<?> authorizeUser(LoginDTO loginDTO);
 
     ResponseEntity<?> getFriendsList(Long userId);
+
+    ResponseEntity<?> getUser(Long userId);
 }

@@ -1,21 +1,20 @@
 package com.insta.instadb.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
-//@ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class User {
 
@@ -60,4 +59,7 @@ public class User {
     @Column
     private String accountType;
 
+    public User(Long userId) {
+        this.userId = userId;
+    }
 }

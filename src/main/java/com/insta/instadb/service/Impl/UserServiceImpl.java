@@ -91,6 +91,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
+    @Override
+    public ResponseEntity<?> getUser(Long userId) {
+        return new ResponseEntity<>(userRepoService.getUserById(userId),HttpStatus.OK);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

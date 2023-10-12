@@ -32,5 +32,10 @@ public class UserRepoImpl implements UserRepoService {
         return userRepo.findByUserName(name);
     }
 
+    @Override
+    public Optional<User> getUserById(Long userId) {
+        return userRepo.findById(userId);
+    }
+
 
 }

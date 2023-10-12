@@ -1,5 +1,6 @@
 package com.insta.instadb.api;
 
+import com.insta.instadb.dto.UserChatDTO;
 import com.insta.instadb.entity.Chats;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,9 @@ public interface ChatApi {
     @PostMapping("/addChat")
     ResponseEntity<?> addMessage(Chats chats);
 
-    @GetMapping("getChats/{userId}")
-    ResponseEntity<?> getUserChats(Long userId);
+    @GetMapping("/getChats")
+    ResponseEntity<?> getUserChats(UserChatDTO chatDTO);
+
+    @GetMapping("getChatList/{userId}")
+    ResponseEntity<?> getUserChatList(Long userId);
 }

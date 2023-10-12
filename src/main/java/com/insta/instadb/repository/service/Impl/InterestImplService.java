@@ -15,4 +15,9 @@ public class InterestImplService implements InterestRepoService {
     public void save(Interests interests) {
         interestRepo.save(interests);
     }
+
+    @Override
+    public Interests getInterestbyName(String s) {
+        return interestRepo.findInterestsByContent(s);
+    }
 }

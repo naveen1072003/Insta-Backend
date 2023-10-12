@@ -1,5 +1,6 @@
 package com.insta.instadb.service;
 
+import com.insta.instadb.dto.UserChatDTO;
 import com.insta.instadb.entity.Chats;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -9,5 +10,7 @@ public interface ChatService {
 
     ResponseEntity<?> saveChat(Chats chats);
 
-    ResponseEntity<?> getAllUserChats(Long userId);
+    ResponseEntity<?> getAllUserChats(UserChatDTO userChatDTO);
+
+    ResponseEntity<?> getChatList(Long userId);
 }

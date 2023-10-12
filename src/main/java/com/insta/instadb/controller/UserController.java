@@ -22,6 +22,11 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public ResponseEntity<?> newUser(@PathVariable Long userId) {
+        return userService.getUser(userId);
+    }
+
+    @Override
     public ResponseEntity<?> checkUserName(@PathVariable  String name) {
         return userService.validateUserName(name);
     }

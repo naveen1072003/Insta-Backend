@@ -38,16 +38,6 @@ public class RecommendServiceImpl implements RecommendService {
 
         // Create HttpClient
         HttpClient client = HttpClient.newHttpClient();
-
-        // Create JSON payload if needed
-//        String jsonBody = "{\"key\":\"value\"}"; // Replace this with your JSON payload
-
-        // Create a POST request
-//        HttpRequest request = HttpRequest.newBuilder()
-//                .uri(URI.create(url))
-//                .header("Content-Type", "application/json") // Set content type if sending JSON data
-//                .POST(HttpRequest.BodyPublishers.ofString(jsonBody)) // Set the request body
-//                .build();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
                 .header("Accept", "application/json") // Set Accept header if expecting JSON response
@@ -56,10 +46,6 @@ public class RecommendServiceImpl implements RecommendService {
         try {
             // Send the POST request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // Print the response status code and body
-//            System.out.println("Response Status Code: " + response.statusCode());
-//            System.out.println("Response Body: " + response.body());
             users = response.body();
         } catch (Exception e) {
             // Handle exceptions
@@ -67,12 +53,12 @@ public class RecommendServiceImpl implements RecommendService {
         }
         users = users.replaceAll(" ", "");
         String[] str = users.substring(1, users.length() - 2).split(",");
-
+        System.out.println(Arrays.toString(str));
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {
             Long id = Long.parseLong(str[i].replaceAll("\\s+", ""));
             User user = userService.findUserById(id).get();
-            if (connectionService.isFollower(userId, user.getUserId()) != null) {
+            if (connectionService.isFollower(userId, user.getUserId()) == null) {
                 userList.add(user);
             }
         }
@@ -89,38 +75,29 @@ public class RecommendServiceImpl implements RecommendService {
                 .uri(URI.create(url))
                 .header("Accept", "application/json") // Set Accept header if expecting JSON response
                 .build();
-        String users = "";
         try {
             // Send the POST request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            // Print the response status code and body
-//            System.out.println("Response Status Code: " + response.statusCode());
-//            System.out.println("Response Body: " + response.body());
-            users = response.body();
         } catch (Exception e) {
             // Handle exceptions
             e.printStackTrace();
         }
         List<Media> mediaList = mediaRepoService.getAllMedia();
-        System.out.println(mediaList);
-//        users = users.replaceAll(" ", "");
-//        String[] str = users.substring(1, users.length() - 2).split(",");
+
         User user = userService.findUserById(userId).get();
         StringBuilder userInterest = new StringBuilder();
-        for(Interests interests:user.getInterests()){
+        for (Interests interests : user.getInterests()) {
             userInterest.append(interests.getContent()).append(" ");
         }
         String inter = userInterest.toString();
         List<Media> media = new ArrayList<>();
         for (Media media1 : mediaList) {
-            for(Interests interests : media1.getInterests()){
-                if(inter.contains(interests.getContent())){
-                    mediaList.add(media1);
+            for (Interests interests : media1.getInterests()) {
+                if (inter.contains(interests.getContent())) {
+                    media.add(media1);
                 }
             }
         }
-        System.out.println(mediaList);
         return new ResponseEntity<>(media, HttpStatus.OK);
     }
 }

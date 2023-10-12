@@ -14,6 +14,7 @@ import java.util.List;
 @Table
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
@@ -24,7 +25,7 @@ public class Media {
     private Long id;
 
     @Column
-    private String mediaContent;
+    private String mediaPath;
 
     @Column
     private String mediaType;
@@ -41,4 +42,10 @@ public class Media {
     private List<Interests> interests;
 
 
+    public Media(String mediaPath, String mediaType, User users, List<Interests> interests) {
+        this.mediaPath = mediaPath;
+        this.mediaType = mediaType;
+        this.users = users;
+        this.interests = interests;
+    }
 }

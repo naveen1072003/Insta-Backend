@@ -2,17 +2,18 @@ package com.insta.instadb.entity;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
-@Table
-@Setter
-@Getter
-@ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@EntityListeners(AuditingEntityListener.class)
 public class ChatsList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +34,7 @@ public class ChatsList {
     @Column
     private String lastMessage;
 
-    @Column
-    private Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Timestamp date;
 }
