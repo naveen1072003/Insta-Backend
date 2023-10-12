@@ -1,8 +1,9 @@
 package com.insta.instadb.controller;
 
 import com.insta.instadb.api.MediaApi;
-import com.insta.instadb.entity.Media;
+import com.insta.instadb.entity.ScheduledMedia;
 import com.insta.instadb.service.MediaService;
+import com.insta.instadb.service.ScheduledMediaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,12 +20,14 @@ public class MediaController implements MediaApi {
 
     @Autowired
     private MediaService mediaService;
+    @Autowired
+    private ScheduledMediaService scheduledMediaService;
 
     @Override
     public ResponseEntity<?> addNewMedia(@RequestParam("file") MultipartFile file,
                                          @RequestParam Long userId,
                                          @RequestParam List<String> interests) throws IOException {
-        return mediaService.saveMedia(file,userId,interests);
+        return mediaService.saveMedia(file, userId, interests);
     }
 
     @Override
@@ -42,5 +45,10 @@ public class MediaController implements MediaApi {
     public ResponseEntity<?> addInterest(@PathVariable String interests) {
         System.out.println(interests);
         return mediaService.addInterests(interests);
+    }
+
+    @Override
+    public ResponseEntity<?> addSchedulePost(@RequestBody ScheduledMedia media) {
+        return scheduledMediaService.savePost(media);
     }
 }

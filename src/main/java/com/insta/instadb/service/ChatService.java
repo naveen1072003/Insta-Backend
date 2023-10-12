@@ -12,5 +12,4 @@ public interface ChatService {
 
     ResponseEntity<?> getAllUserChats(UserChatDTO userChatDTO);
 
-    ResponseEntity<?> getChatList(Long userId);
 }

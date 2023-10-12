@@ -1,5 +1,6 @@
 package com.insta.instadb.api;
 
+import com.insta.instadb.entity.ScheduledMedia;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,4 +25,7 @@ public interface MediaApi {
 
     @PostMapping("/addInterest/{interests}")
     ResponseEntity<?> addInterest(String interests);
+
+    @PostMapping("/addSchedulePost")
+    ResponseEntity<?> addSchedulePost(ScheduledMedia media);
 }

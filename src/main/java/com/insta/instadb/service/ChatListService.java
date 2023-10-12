@@ -8,4 +8,7 @@ import org.springframework.stereotype.Service;
 public interface ChatListService {
 
     void saveChatList(User user1, User user2);
+
+    ResponseEntity<?> getChatList(Long userId);
+
 }

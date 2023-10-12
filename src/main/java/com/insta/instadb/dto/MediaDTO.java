@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class MediaDTO {
 
-    private byte[] mediaContent;
+    private String mediaContent;
 
     private String mediaType;
 

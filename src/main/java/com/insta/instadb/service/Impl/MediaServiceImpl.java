@@ -50,7 +50,7 @@ public class MediaServiceImpl implements MediaService {
         }
 
         String filePath = FOLDER_PATH + file.getOriginalFilename();
-        Media media = new Media(filePath,file.getContentType(),new User(userId),interestsList);
+        Media media = new Media(file.getOriginalFilename(),file.getContentType(),new User(userId),interestsList);
         file.transferTo(new File(filePath));
         return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
     }
@@ -65,7 +65,7 @@ public class MediaServiceImpl implements MediaService {
                 Long count = likesService.getLikesCountByMedia(media.getId());
 
                 MediaDTO mediaDTO = new MediaDTO();
-                mediaDTO.setMediaContent(Files.readAllBytes(new File(media.getMediaPath()).toPath()));
+                mediaDTO.setMediaContent("http://localhost:8080/"+media.getMediaPath());
                 mediaDTO.setMediaType(media.getMediaType());
                 mediaDTO.setUploadedDate(media.getUploadedDate());
                 mediaDTO.setTags(media.getInterests());
@@ -75,9 +75,8 @@ public class MediaServiceImpl implements MediaService {
 
                 responseList.add(mediaDTO);
             }
-//        return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("application/json")).body(responseList.get(0).getMediaContent());
-
-            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/jpeg")).body(responseList.get(0).getMediaContent());
+        return new ResponseEntity<>(responseList,HttpStatus.OK);
+//            return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.valueOf("image/jpeg")).body(responseList.get(0).getMediaContent());
     }
 
     @Override

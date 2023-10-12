@@ -6,7 +6,9 @@ import com.insta.instadb.repository.service.ChatListRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+
 @Service
 public class ChatListRepoServiceImpl implements ChatListRepoService {
 
@@ -24,5 +26,11 @@ public class ChatListRepoServiceImpl implements ChatListRepoService {
         if (chatsList.isEmpty())
             return true;
         return false;
+    }
+
+    @Override
+    public List<ChatsList> getUserChatList(Long userId) {
+        List<ChatsList> chatsLists = chatListRepo.findChatsListsByUser1UserIdOrderByDateDesc(userId);
+        return chatsLists;
     }
 }

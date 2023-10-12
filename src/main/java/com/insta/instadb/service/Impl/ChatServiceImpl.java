@@ -32,9 +32,5 @@ public class ChatServiceImpl implements ChatService {
         return new ResponseEntity<>(chatRepoService.getAllChats(userChatDTO), HttpStatus.OK);
     }
 
-    @Override
-    public ResponseEntity<?> getChatList(Long userId) {
-        return null;
-    }
 
 }

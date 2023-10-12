@@ -16,6 +16,6 @@ public interface ChatApi {
     @GetMapping("/getChats")
     ResponseEntity<?> getUserChats(UserChatDTO chatDTO);
 
-    @GetMapping("getChatList/{userId}")
+    @GetMapping("/getChatList/{userId}")
     ResponseEntity<?> getUserChatList(Long userId);
 }
