@@ -14,5 +14,6 @@ public interface ConnectionRepo extends JpaRepository<Connectiondetails, Long> {
 
    Long countAllByUser1_UserId(Long userId);
 
+   List<Connectiondetails> findConnectiondetailsByUser2_UserId(Long userId);
    List<Connectiondetails> findConnectiondetailsByUser1_UserIdAndStatus_Id(Long userId,Long statusId);
 }

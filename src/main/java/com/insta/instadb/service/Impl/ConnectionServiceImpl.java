@@ -68,6 +68,11 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
+    public List<Connectiondetails> getFollowers(Long userId) {
+        return connectionRepoService.getAllFollowers(userId);
+    }
+
+    @Override
     public Long getFollowersCount(Long userId) {
         return connectionRepoService.getFrCount(userId);
     }

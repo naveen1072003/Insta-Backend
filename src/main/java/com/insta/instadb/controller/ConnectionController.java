@@ -1,6 +1,7 @@
 package com.insta.instadb.controller;
 
 import com.insta.instadb.api.ConnectionApi;
+import com.insta.instadb.dto.ConnectionDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.service.ConnectionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class ConnectionController implements ConnectionApi {
     @Override
     public ResponseEntity<?> followRequest(@RequestBody Connectiondetails connectiondetails) {
         return connectionService.addRequest(connectiondetails);
+    }
+
+    @Override
+    public ResponseEntity<?> removeFollowRequest(ConnectionDTO connectionDTO) {
+        return null;
     }
 
     @Override

@@ -7,27 +7,23 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 
-@Data
 @Entity
-@Table
-@AllArgsConstructor
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class ScheduledMedia {
+public class Notifications {
     @Id
     @GeneratedValue
     private Long id;
 
-    private String mediaPath;
-    private String mediaType;
-    private Date scheduledTime;
+    private String content;
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Timestamp createdTime;
-    private LocalDate date;
 
+    @ManyToOne
+    private User user;
 }

@@ -1,5 +1,6 @@
 package com.insta.instadb.api;
 
+import com.insta.instadb.dto.ConnectionDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +12,8 @@ public interface ConnectionApi {
     @PostMapping("/followRequest")
     ResponseEntity<?> followRequest(Connectiondetails connectiondetails);
 
+    @PostMapping("/removeFollow")
+    ResponseEntity<?> removeFollowRequest(ConnectionDTO connectionDTO);
     @GetMapping("/getConnectionCount/{userId}")
     ResponseEntity<?> followersandfollwingCount(Long userId);
 }

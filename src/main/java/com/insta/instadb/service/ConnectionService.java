@@ -13,8 +13,11 @@ public interface ConnectionService {
 
     Connectiondetails isFollower(Long sender,Long receiver);
 
+    List<Connectiondetails> getFollowers(Long userId);
     Long getFollowersCount(Long userId);
     Long getFollowingCount(Long userId);
 
     List<Connectiondetails> findFriends(Long userId);
+
+//    ResponseEntity<?> get
 }

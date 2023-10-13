@@ -36,4 +36,9 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
     public List<Connectiondetails> findFriendsList(Long userId) {
         return connectionRepo.findConnectiondetailsByUser1_UserIdAndStatus_Id(userId,4L);
     }
+
+    @Override
+    public List<Connectiondetails> getAllFollowers(Long userId) {
+        return connectionRepo.findConnectiondetailsByUser2_UserId(userId);
+    }
 }

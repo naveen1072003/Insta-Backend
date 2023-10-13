@@ -19,4 +19,6 @@ public interface ConnectionRepoService {
     Long getFgCount(Long userId);
 
     List<Connectiondetails> findFriendsList(Long userId);
+
+    List<Connectiondetails> getAllFollowers(Long userId);
 }
