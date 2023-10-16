@@ -27,4 +27,6 @@ public interface UserService {
     ResponseEntity<?> getUser(Long userId);
 
     ResponseEntity<?> removeAccount(Long userId);
+
+    ResponseEntity<?> Oauthorize(String email);
 }

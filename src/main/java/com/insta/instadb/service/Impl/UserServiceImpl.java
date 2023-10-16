@@ -110,7 +110,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public ResponseEntity<?> removeAccount(Long userId) {
         userRepoService.deleteUser(userId);
-        return new ResponseEntity<>("User Deleted Successfully!!!",HttpStatus.OK);
+        return new ResponseEntity<>("User Deleted Successfully!!!", HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> Oauthorize(String email) {
+        Optional<User> user = userRepoService.findUserByEmail(email);
+        if (user.isPresent()) {
+            return new ResponseEntity<>(jwtService.generateToken(email), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(user, HttpStatus.UNAUTHORIZED);
     }
 
 

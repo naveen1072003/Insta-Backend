@@ -52,6 +52,11 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public ResponseEntity<?> oAuth(String email) {
+        return userService.Oauthorize(email);
+    }
+
+    @Override
     public ResponseEntity<?> friendsList(@PathVariable Long userId) {
         return userService.getFriendsList(userId);
     }
