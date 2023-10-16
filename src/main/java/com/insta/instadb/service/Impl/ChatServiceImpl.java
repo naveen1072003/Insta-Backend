@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 @Service
 public class ChatServiceImpl implements ChatService {
@@ -29,7 +32,12 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ResponseEntity<?> getAllUserChats(UserChatDTO userChatDTO) {
-        return new ResponseEntity<>(chatRepoService.getAllChats(userChatDTO), HttpStatus.OK);
+        Map<Long,Chats> chatsMap = new TreeMap<>();
+        List<Chats> chatsList = chatRepoService.getAllChats(userChatDTO);
+        for (Chats  chats:chatsList) {
+            chatsMap.put(chats.getId(),chats);
+        }
+        return new ResponseEntity<>(chatsMap, HttpStatus.OK);
     }
 
 

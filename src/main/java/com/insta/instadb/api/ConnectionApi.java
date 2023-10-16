@@ -15,6 +15,9 @@ public interface ConnectionApi {
     @PostMapping("/removeFollow")
     ResponseEntity<?> removeFollowRequest(ConnectionDTO connectionDTO);
 
+    @PostMapping("/getRequestedConnections/{userId}")
+    ResponseEntity<?> requestedList(Long userId);
+
     @PostMapping("/acceptedRequest")
     ResponseEntity<?> acceptedFollowRequest(ConnectionDTO connectionDTO);
 

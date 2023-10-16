@@ -10,6 +10,6 @@ import java.util.*;
 @Repository
 public interface ChatRepo extends JpaRepository<Chats,Long> {
 
-    List<Chats> findAllByUser1_UserIdOrUser2_UserId(Long id1,Long id2);
+    List<Chats> findAllByUser1_UserIdAndUser2_UserId(Long id1,Long id2);
 
 }

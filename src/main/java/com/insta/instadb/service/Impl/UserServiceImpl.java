@@ -13,6 +13,8 @@ import com.insta.instadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +31,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepoService userRepoService;
 
+//    @Autowired
+//    private JavaMailSender javaMailSender;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -43,7 +48,12 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (checkIfUser(user.getEmail())) {
             return new ResponseEntity<>(user.getUserName(), HttpStatus.BAD_REQUEST);
         } else {
+            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+            String subject;
+            simpleMailMessage.setTo("");
+//            javaMailSender.send(simpleMailMessage);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            simpleMailMessage.setFrom("naveenrangaraju450@gmail.com");
             return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
         }
     }
@@ -83,7 +93,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         Optional<User> userDetails = userRepoService.findUserByEmail(loginDTO.getEmail());
 
         if (userDetails.isEmpty()) {
-            return new ResponseEntity<>("User does not exist!",HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("User does not exist!", HttpStatus.NOT_FOUND);
         } else {
             if (passwordEncoder.matches(loginDTO.getPassword(), userDetails.get().getPassword())) {
                 LoginResponseDTO loginResponseDTO = new LoginResponseDTO();

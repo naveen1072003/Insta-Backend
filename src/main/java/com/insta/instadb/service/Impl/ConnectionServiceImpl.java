@@ -130,4 +130,9 @@ public class ConnectionServiceImpl implements ConnectionService {
     public ResponseEntity<?> rejectRequest(ConnectionDTO connectionDTO) {
         return new ResponseEntity<>(connectionRepoService.removeFollowRequest(new ConnectionDTO(connectionDTO.getReceiver(),connectionDTO.getSender())),HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> getRequests(Long userId) {
+        return new ResponseEntity<>(connectionRepoService.getRequestConnection(userId),HttpStatus.OK);
+    }
 }

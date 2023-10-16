@@ -29,6 +29,11 @@ public class ConnectionController implements ConnectionApi {
     }
 
     @Override
+    public ResponseEntity<?> requestedList(@PathVariable Long userId) {
+        return connectionService.getRequests(userId);
+    }
+
+    @Override
     public ResponseEntity<?> acceptedFollowRequest(@RequestBody ConnectionDTO connectionDTO) {
         return connectionService.acceptRequest(connectionDTO);
     }

@@ -25,4 +25,6 @@ public interface ConnectionService {
     ResponseEntity<?> acceptRequest(ConnectionDTO connectionDTO);
 
     ResponseEntity<?> rejectRequest(ConnectionDTO connectionDTO);
+
+    ResponseEntity<?> getRequests(Long userId);
 }

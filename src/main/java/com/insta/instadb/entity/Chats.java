@@ -1,30 +1,29 @@
 package com.insta.instadb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import java.sql.Timestamp;
 
 @Table
 @Entity
-@Setter
-@Getter
-@ToString
+@Data
 @EntityListeners(AuditingEntityListener.class)
 public class Chats {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private User user1;
-
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     private User user2;
 

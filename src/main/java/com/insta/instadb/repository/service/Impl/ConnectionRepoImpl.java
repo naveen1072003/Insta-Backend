@@ -26,12 +26,12 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
 
     @Override
     public Long getFrCount(Long userId) {
-        return connectionRepo.countConnectiondetailsByReceiver_UserId(userId);
+        return connectionRepo.countConnectiondetailsByReceiver_UserIdAndStatus_IdNot(userId,2L);
     }
 
     @Override
     public Long getFgCount(Long userId) {
-        return connectionRepo.countAllBySender_UserId(userId);
+        return connectionRepo.countConnectiondetailsBySender_UserIdAndStatus_IdNot(userId, 2L);
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
 
     @Override
     public List<Connectiondetails> getAllFollowers(Long userId) {
-        return connectionRepo.findConnectiondetailsByReceiver_UserId(userId);
+        return connectionRepo.findConnectiondetailsBySender_UserIdAndStatus_Id(userId,2L);
     }
 
     @Transactional
@@ -55,5 +55,10 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
         System.out.println(connectionDTO);
         connectionRepo.deleteConnectiondetailsBySenderUserIdAndReceiverUserId(connectionDTO.getSender().getUserId(),connectionDTO.getReceiver().getUserId());
         return "Unfollowed Successfully!!!";
+    }
+
+    @Override
+    public List<Connectiondetails> getRequestConnection(Long userId) {
+        return connectionRepo.findConnectiondetailsByReceiver_UserIdAndStatus_Id(userId,2L);
     }
 }

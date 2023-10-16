@@ -22,6 +22,7 @@ public class ChatController implements ChatApi {
 
     @Override
     public ResponseEntity<?> addMessage(@RequestBody Chats chats) {
+        System.out.println(chats);
         return chatService.saveChat(chats);
     }
 

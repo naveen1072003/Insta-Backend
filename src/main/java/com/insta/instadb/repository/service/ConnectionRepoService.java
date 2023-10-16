@@ -25,4 +25,6 @@ public interface ConnectionRepoService {
     List<Connectiondetails> getAllFollowers(Long userId);
 
     String removeFollowRequest(ConnectionDTO connectionDTO);
+
+    List<Connectiondetails> getRequestConnection(Long userId);
 }
