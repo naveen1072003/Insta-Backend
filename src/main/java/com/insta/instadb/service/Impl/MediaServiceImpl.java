@@ -73,7 +73,7 @@ public class MediaServiceImpl implements MediaService {
     }
 
     @Override
-    public ResponseEntity<?> getMediaByUser(Long userId) throws IOException {
+    public ResponseEntity<?> getMediaByUser(Long userId) {
         List<Media> mediaList = mediaRepoService.findMediaByUser_Id(userId);
         List<MediaDTO> responseList = new ArrayList<>();
         for (Media media : mediaList) {
@@ -82,7 +82,7 @@ public class MediaServiceImpl implements MediaService {
             Long count = likesService.getLikesCountByMedia(media.getId());
 
             MediaDTO mediaDTO = new MediaDTO();
-            mediaDTO.setMediaContent("http://localhost:8080/" + media.getMediaPath());
+            mediaDTO.setMediaContent(media.getMediaPath());
             mediaDTO.setMediaType(media.getMediaType());
             mediaDTO.setUploadedDate(media.getUploadedDate());
             mediaDTO.setTags(media.getInterests());

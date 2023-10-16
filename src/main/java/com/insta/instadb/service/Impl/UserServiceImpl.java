@@ -3,6 +3,7 @@ package com.insta.instadb.service.Impl;
 import com.insta.instadb.auth.JwtService;
 import com.insta.instadb.auth.UserDetailsInfo;
 import com.insta.instadb.dto.LoginDTO;
+import com.insta.instadb.dto.LoginResponseDTO;
 import com.insta.instadb.dto.UpdateUserDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
@@ -79,15 +80,18 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public ResponseEntity<?> authorizeUser(LoginDTO loginDTO) {
-        Optional<User> customerDetails = userRepoService.findUserByEmail(loginDTO.getEmail());
+        Optional<User> userDetails = userRepoService.findUserByEmail(loginDTO.getEmail());
 
-        if (customerDetails.isEmpty()) {
-            return ResponseEntity.ok("User does not exist!");
+        if (userDetails.isEmpty()) {
+            return new ResponseEntity<>("User does not exist!",HttpStatus.NOT_FOUND);
         } else {
-            if (passwordEncoder.matches(loginDTO.getPassword(), customerDetails.get().getPassword())) {
-                return new ResponseEntity<>(jwtService.generateToken(loginDTO.getEmail()), HttpStatus.OK);
+            if (passwordEncoder.matches(loginDTO.getPassword(), userDetails.get().getPassword())) {
+                LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+                loginResponseDTO.setAccessToken(jwtService.generateToken(loginDTO.getEmail()));
+                loginResponseDTO.setUserId(userDetails.get().getUserId());
+                return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
             }
-            return new ResponseEntity<>("You have entered wrong password", HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>("You have entered wrong password", HttpStatus.UNAUTHORIZED);
         }
     }
 
@@ -119,7 +123,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (user.isPresent()) {
             return new ResponseEntity<>(jwtService.generateToken(email), HttpStatus.OK);
         }
-        return new ResponseEntity<>(user, HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
     }
 
 

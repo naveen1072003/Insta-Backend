@@ -30,6 +30,9 @@ public class Media {
     @Column
     private String mediaType;
 
+    @Column
+    private String description;
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Timestamp uploadedDate;

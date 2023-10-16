@@ -14,7 +14,7 @@ public interface UserApi {
     @PutMapping("/updateUser")
     ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO);
 
-    @DeleteMapping("/updateUser")
+    @DeleteMapping("/deleteUser")
     ResponseEntity<?> deleteUser(Long userId);
 
     @GetMapping("/getUser/{userId}")

@@ -30,7 +30,6 @@ public class MediaController implements MediaApi {
 
     @Override
     public ResponseEntity<?> getMediaByUser(@PathVariable Long userId) throws IOException {
-        System.out.println(userId);
         return mediaService.getMediaByUser(userId);
     }
 
