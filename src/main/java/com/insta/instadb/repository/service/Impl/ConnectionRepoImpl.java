@@ -1,12 +1,14 @@
 package com.insta.instadb.repository.service.Impl;
 
+import com.insta.instadb.dto.ConnectionDTO;
 import com.insta.instadb.entity.Connectiondetails;
-import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.ConnectionRepo;
 import com.insta.instadb.repository.service.ConnectionRepoService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ConnectionRepoImpl implements ConnectionRepoService {
 
@@ -18,27 +20,40 @@ public class ConnectionRepoImpl implements ConnectionRepoService {
     }
 
     @Override
-    public Connectiondetails findBySenderandReceiver(Long sender, Long receiver) {
-        return connectionRepo.findByUser1_UserIdAndUser2_UserId(sender,receiver);
+    public Optional<Connectiondetails> findBySenderandReceiver(Long sender, Long receiver) {
+        return Optional.ofNullable(connectionRepo.findBySender_UserIdAndReceiver_UserId(sender, receiver));
     }
 
     @Override
     public Long getFrCount(Long userId) {
-        return connectionRepo.countConnectiondetailsByUser2_UserId(userId);
+        return connectionRepo.countConnectiondetailsByReceiver_UserId(userId);
     }
 
     @Override
     public Long getFgCount(Long userId) {
-        return connectionRepo.countAllByUser1_UserId(userId);
+        return connectionRepo.countAllBySender_UserId(userId);
+    }
+
+    @Override
+    public Connectiondetails changeStatus(ConnectionDTO connectionDTO) {
+        return connectionRepo.findBySender_UserIdAndReceiver_UserId(connectionDTO.getReceiver().getUserId(),connectionDTO.getSender().getUserId());
     }
 
     @Override
     public List<Connectiondetails> findFriendsList(Long userId) {
-        return connectionRepo.findConnectiondetailsByUser1_UserIdAndStatus_Id(userId,4L);
+        return connectionRepo.findConnectiondetailsBySender_UserIdAndStatus_Id(userId,4L);
     }
 
     @Override
     public List<Connectiondetails> getAllFollowers(Long userId) {
-        return connectionRepo.findConnectiondetailsByUser2_UserId(userId);
+        return connectionRepo.findConnectiondetailsByReceiver_UserId(userId);
+    }
+
+    @Transactional
+    @Override
+    public String removeFollowRequest(ConnectionDTO connectionDTO) {
+        System.out.println(connectionDTO);
+        connectionRepo.deleteConnectiondetailsBySenderUserIdAndReceiverUserId(connectionDTO.getSender().getUserId(),connectionDTO.getReceiver().getUserId());
+        return "Unfollowed Successfully!!!";
     }
 }

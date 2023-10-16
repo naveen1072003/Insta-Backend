@@ -3,6 +3,7 @@ package com.insta.instadb.service.Impl;
 import com.insta.instadb.auth.JwtService;
 import com.insta.instadb.auth.UserDetailsInfo;
 import com.insta.instadb.dto.LoginDTO;
+import com.insta.instadb.dto.UpdateUserDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.service.UserRepoService;
@@ -47,6 +48,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
+    public ResponseEntity<?> updateUserDetails(UpdateUserDTO updateUserDTO) {
+        User user = userRepoService.getUserById(updateUserDTO.getUserDTO().getUserId()).get();
+        user.setDateOfBirth(updateUserDTO.getUserDTO().getDateOfBirth());
+        user.setFirstName(updateUserDTO.getUserDTO().getFirstName());
+        user.setLastName(updateUserDTO.getUserDTO().getLastName());
+        user.setPhNo(updateUserDTO.getUserDTO().getPhNo());
+        return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
+    }
+
+    @Override
     public boolean checkIfUser(String email) {
         Optional<User> user = userRepoService.findUserByEmail(email);
         return user.isPresent();
@@ -86,14 +97,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         List<User> userList = new ArrayList<>();
         for (Connectiondetails connectiondetails : mutual) {
-            userList.add(userRepoService.findByUserId(connectiondetails.getUser2().getUserId()));
+            userList.add(userRepoService.findByUserId(connectiondetails.getReceiver().getUserId()));
         }
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<?> getUser(Long userId) {
-        return new ResponseEntity<>(userRepoService.getUserById(userId),HttpStatus.OK);
+        return new ResponseEntity<>(userRepoService.getUserById(userId), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> removeAccount(Long userId) {
+        userRepoService.deleteUser(userId);
+        return new ResponseEntity<>("User Deleted Successfully!!!",HttpStatus.OK);
     }
 
 

@@ -1,6 +1,7 @@
 package com.insta.instadb.service;
 
 import com.insta.instadb.dto.LoginDTO;
+import com.insta.instadb.dto.UpdateUserDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import java.util.Optional;
 public interface UserService {
     ResponseEntity<?> saveNewUser(User user);
 
+    ResponseEntity<?> updateUserDetails(UpdateUserDTO updateUserDTO);
     boolean checkIfUser(String email);
 
     Optional<User> findUserById(Long userId);
@@ -23,4 +25,6 @@ public interface UserService {
     ResponseEntity<?> getFriendsList(Long userId);
 
     ResponseEntity<?> getUser(Long userId);
+
+    ResponseEntity<?> removeAccount(Long userId);
 }

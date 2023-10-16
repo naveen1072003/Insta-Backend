@@ -1,5 +1,6 @@
 package com.insta.instadb.service;
 
+import com.insta.instadb.dto.ConnectionDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +12,7 @@ import java.util.List;
 public interface ConnectionService {
     ResponseEntity<?> addRequest(Connectiondetails connectiondetails);
 
-    Connectiondetails isFollower(Long sender,Long receiver);
+    ResponseEntity<?> isFollower(Long sender,Long receiver);
 
     List<Connectiondetails> getFollowers(Long userId);
     Long getFollowersCount(Long userId);
@@ -19,5 +20,9 @@ public interface ConnectionService {
 
     List<Connectiondetails> findFriends(Long userId);
 
-//    ResponseEntity<?> get
+    ResponseEntity<?> removeFollow(ConnectionDTO connectionDTO);
+
+    ResponseEntity<?> acceptRequest(ConnectionDTO connectionDTO);
+
+    ResponseEntity<?> rejectRequest(ConnectionDTO connectionDTO);
 }

@@ -1,16 +1,21 @@
 package com.insta.instadb.api;
 
 import com.insta.instadb.dto.LoginDTO;
+import com.insta.instadb.dto.UpdateUserDTO;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/userdetails")
 public interface UserApi {
     @PostMapping("/newUser")
     ResponseEntity<?> newUser(User user);
+
+    @PutMapping("/updateUser")
+    ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO);
+
+    @DeleteMapping("/updateUser")
+    ResponseEntity<?> deleteUser(Long userId);
 
     @GetMapping("/getUser/{userId}")
     ResponseEntity<?> newUser(Long userId);

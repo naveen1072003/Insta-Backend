@@ -14,6 +14,13 @@ public interface ConnectionApi {
 
     @PostMapping("/removeFollow")
     ResponseEntity<?> removeFollowRequest(ConnectionDTO connectionDTO);
+
+    @PostMapping("/acceptedRequest")
+    ResponseEntity<?> acceptedFollowRequest(ConnectionDTO connectionDTO);
+
+    @PostMapping("/rejectRequest")
+    ResponseEntity<?> rejectedFollowRequest(ConnectionDTO connectionDTO);
+
     @GetMapping("/getConnectionCount/{userId}")
     ResponseEntity<?> followersandfollwingCount(Long userId);
 }

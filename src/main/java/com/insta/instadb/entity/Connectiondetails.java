@@ -27,8 +27,8 @@ public class Connectiondetails {
     private Status status;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User user1;
+    private User sender;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    private User user2;
+    private User receiver;
 }

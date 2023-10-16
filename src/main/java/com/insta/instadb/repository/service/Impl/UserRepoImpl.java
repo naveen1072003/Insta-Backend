@@ -37,5 +37,10 @@ public class UserRepoImpl implements UserRepoService {
         return userRepo.findById(userId);
     }
 
+    @Override
+    public void deleteUser(Long userId) {
+         userRepo.deleteById(userId);
+    }
+
 
 }

@@ -1,11 +1,16 @@
 package com.insta.instadb.dto;
 
+import com.insta.instadb.entity.User;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ConnectionDTO {
 
-    private Long user1;
+    private User sender;
 
-    private Long user2;
+    private User receiver;
 }

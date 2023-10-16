@@ -15,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class MediaServiceImpl implements MediaService {
@@ -37,7 +38,9 @@ public class MediaServiceImpl implements MediaService {
     @Autowired
     private NotificationService notificationService;
 
-    String FOLDER_PATH = "/home/divum/IdeaProjects/InstaDB/src/main/resources/static/";
+    String IMG_FOLDER_PATH = "/home/divum/IdeaProjects/InstaDB/src/main/resources/static/images/";
+    String VID_FOLDER_PATH = "/home/divum/IdeaProjects/InstaDB/src/main/resources/static/images/";
+
 
     @Override
     public ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests) throws IOException {
@@ -47,18 +50,26 @@ public class MediaServiceImpl implements MediaService {
 
         for (Connectiondetails connectiondetails : connectionList) {
             Notifications notifications = new Notifications();
-            notifications.setContent(connectiondetails.getUser2().getUserName() + " added a new post");
-            notifications.setUser(new User(connectiondetails.getUser1().getUserId()));
+            notifications.setContent(connectiondetails.getReceiver().getUserName() + " added a new post");
+            notifications.setUser(new User(connectiondetails.getSender().getUserId()));
             notificationService.saveNotifications(notifications);
         }
         for (int i = 0; i < interests.size(); i++) {
             interestsList.add(interestRepoService.getInterestbyName(interests.get(i)));
         }
 
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
-        Media media = new Media(file.getOriginalFilename(), file.getContentType(), new User(userId), interestsList);
-        file.transferTo(new File(filePath));
-        return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
+        String filePath;
+        if (Objects.requireNonNull(file.getContentType()).startsWith("image/")) {
+            filePath = IMG_FOLDER_PATH + file.getOriginalFilename();
+            Media media = new Media(file.getOriginalFilename(), file.getContentType(), new User(userId), interestsList);
+            file.transferTo(new File(filePath));
+            return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
+        } else {
+            filePath = VID_FOLDER_PATH + file.getOriginalFilename();
+            Media media = new Media(file.getOriginalFilename(), file.getContentType(), new User(userId), interestsList);
+            file.transferTo(new File(filePath));
+            return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
+        }
     }
 
     @Override

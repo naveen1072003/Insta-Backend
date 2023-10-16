@@ -2,6 +2,7 @@ package com.insta.instadb.api;
 
 import com.insta.instadb.entity.ScheduledMedia;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,8 @@ public interface MediaApi {
     ResponseEntity<?> addNewMedia(MultipartFile file,
                                   Long userId, List<String> interests) throws IOException;
 
+//    @DeleteMapping
+//    ResponseEntity<?> reomoveMedia()
     @GetMapping("/getAllMedia/{userId}")
     ResponseEntity<?> getMediaByUser(Long userId) throws IOException;
 

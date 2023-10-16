@@ -5,9 +5,10 @@ import com.insta.instadb.entity.Likes;
 import com.insta.instadb.service.LikesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
+@CrossOrigin
 @RestController
 public class LikesController implements LikesApi {
 

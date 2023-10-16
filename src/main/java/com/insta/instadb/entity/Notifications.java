@@ -1,5 +1,6 @@
 package com.insta.instadb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,12 @@ public class Notifications {
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Timestamp createdTime;
-
+    @JsonIgnore
     @ManyToOne
     private User user;
+
+    public Notifications(String content, User user) {
+        this.content = content;
+        this.user = user;
+    }
 }
