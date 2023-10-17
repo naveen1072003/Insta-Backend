@@ -9,26 +9,31 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/userdetails")
 public interface UserApi {
     @PostMapping("/newUser")
-    ResponseEntity<?> newUser(User user);
+    ResponseEntity<?> newUser(@RequestBody User user);
 
     @PutMapping("/updateUser")
-    ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO);
+    ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO updateUserDTO);
 
-    @DeleteMapping("/deleteUser")
-    ResponseEntity<?> deleteUser(Long userId);
+    @DeleteMapping("/deleteUser/{userId}")
+    ResponseEntity<?> deleteUser(@PathVariable Long userId);
 
+    @GetMapping("/searchUser/{username}")
+    ResponseEntity<?> getUserByName(@PathVariable String username);
     @GetMapping("/getUser/{userId}")
-    ResponseEntity<?> newUser(Long userId);
+    ResponseEntity<?> newUser(@PathVariable Long userId);
 
-    @GetMapping("/isUser")
-    ResponseEntity<?> checkUserName(String Name);
+    @GetMapping("/isUser/{name}")
+    ResponseEntity<?> checkUserName(@PathVariable String name);
 
     @PostMapping("/loginAuth")
-    ResponseEntity<?> authUser(LoginDTO loginDTO);
+    ResponseEntity<?> authUser(@RequestBody LoginDTO loginDTO);
 
     @PostMapping("/oauthUser/{email}")
-    ResponseEntity<?> oAuth(String email);
+    ResponseEntity<?> oAuth(@PathVariable String email);
 
     @GetMapping("/getFriendsList/{userId}")
-    ResponseEntity<?> friendsList(Long userId);
+    ResponseEntity<?> friendsList(@PathVariable Long userId);
+
+    @GetMapping("/forgotPassword/{email}")
+    ResponseEntity<?> getResetLink(@PathVariable String email);
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @CrossOrigin
@@ -24,8 +25,10 @@ public class MediaController implements MediaApi {
     @Override
     public ResponseEntity<?> addNewMedia(@RequestParam("file") MultipartFile file,
                                          @RequestParam Long userId,
-                                         @RequestParam List<String> interests) throws IOException {
-        return mediaService.saveMedia(file, userId, interests);
+                                         @RequestParam List<String> interests,
+                                         @RequestParam String description,
+                                         @RequestParam String scheduledTime) throws IOException, ParseException {
+        return mediaService.saveMedia(file, userId, interests,description,scheduledTime);
     }
 
     @Override

@@ -41,8 +41,8 @@ public class ConnectionServiceImpl implements ConnectionService {
                 return new ResponseEntity<>("Already Followed!!!", HttpStatus.OK);
             }
         }
-        User user = userRepoService.findByUserId(connectiondetails.getSender().getUserId());
-        User user1 = userRepoService.findByUserId(connectiondetails.getReceiver().getUserId());
+        User user = userRepoService.findByUserId(connectiondetails.getSender().getUserId()).get();
+        User user1 = userRepoService.findByUserId(connectiondetails.getReceiver().getUserId()).get();
         connectiondetails.setCreatedDate(new Date());
 
         if (follower != null && isfollowing == null) {
@@ -59,20 +59,23 @@ public class ConnectionServiceImpl implements ConnectionService {
             Connectiondetails notifyUser = connectionRepoService.saveFollowRequest(isfollowing);
             Connectiondetails userToBeNotified = connectionRepoService.saveFollowRequest(connectiondetails);
             System.out.println(userToBeNotified + " " + userToBeNotified);
-            notificationService.saveNotifications(new Notifications(userRepoService.findByUserId(userToBeNotified.getSender().getUserId()).getUserName() + " is following you!!!", notifyUser.getSender()));
+            notificationService.saveNotifications(new Notifications(userRepoService.findByUserId(userToBeNotified.getSender().getUserId()).get().getUserName() + " is following you!!!", notifyUser.getSender()));
             return new ResponseEntity<>(userToBeNotified, HttpStatus.OK);
         }
         if (isfollowing == null) {
             if (user.getAccountType().equals("public") && user1.getAccountType().equals("private")) {
                 connectiondetails.setStatus(new Status(2L));
+                notificationService.saveNotifications(new Notifications(user.getUserName() + " is requested you to follow!!!", user1));
             } else if (user.getAccountType().equals("public") && user1.getAccountType().equals("public")) {
                 connectiondetails.setStatus(new Status(1L));
+                notificationService.saveNotifications(new Notifications(user.getUserName() + " is following you!!!", user1));
             } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("private")) {
                 connectiondetails.setStatus(new Status(2L));
+                notificationService.saveNotifications(new Notifications(user.getUserName() + " is requested you to follow!!!", user1));
             } else if (user.getAccountType().equals("private") && user1.getAccountType().equals("public")) {
                 connectiondetails.setStatus(new Status(1L));
+                notificationService.saveNotifications(new Notifications(user.getUserName() + " is following you!!!", user1));
             }
-            notificationService.saveNotifications(new Notifications(user.getUserName() + " is following you!!!", user1));
             return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Already Friends", HttpStatus.BAD_REQUEST);
@@ -110,7 +113,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     @Override
     public ResponseEntity<?> removeFollow(ConnectionDTO connectionDTO) {
-        Connectiondetails connectiondetails = connectionRepoService.findBySenderandReceiver(connectionDTO.getSender().getUserId(), connectionDTO.getReceiver().getUserId()).orElseThrow(()-> new NoSuchElementException("Connection is not Present"));
+        Connectiondetails connectiondetails = connectionRepoService.findBySenderandReceiver(connectionDTO.getSender().getUserId(), connectionDTO.getReceiver().getUserId()).orElseThrow(() -> new NoSuchElementException("Connection is not Present"));
 
         if (connectiondetails != null) {
             connectiondetails.setStatus(new Status(1L));
@@ -121,18 +124,18 @@ public class ConnectionServiceImpl implements ConnectionService {
 
     @Override
     public ResponseEntity<?> acceptRequest(ConnectionDTO connectionDTO) {
-        Connectiondetails connectiondetails = connectionRepoService.findBySenderandReceiver(connectionDTO.getReceiver().getUserId(),connectionDTO.getSender().getUserId()).orElseThrow(()-> new NoSuchElementException("Connection is not Present"));
+        Connectiondetails connectiondetails = connectionRepoService.findBySenderandReceiver(connectionDTO.getReceiver().getUserId(), connectionDTO.getSender().getUserId()).orElseThrow(() -> new NoSuchElementException("Connection is not Present"));
         connectiondetails.setStatus(new Status(1L));
         return new ResponseEntity<>(connectionRepoService.saveFollowRequest(connectiondetails), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<?> rejectRequest(ConnectionDTO connectionDTO) {
-        return new ResponseEntity<>(connectionRepoService.removeFollowRequest(new ConnectionDTO(connectionDTO.getReceiver(),connectionDTO.getSender())),HttpStatus.OK);
+        return new ResponseEntity<>(connectionRepoService.removeFollowRequest(new ConnectionDTO(connectionDTO.getReceiver(), connectionDTO.getSender())), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<?> getRequests(Long userId) {
-        return new ResponseEntity<>(connectionRepoService.getRequestConnection(userId),HttpStatus.OK);
+        return new ResponseEntity<>(connectionRepoService.getRequestConnection(userId), HttpStatus.OK);
     }
 }

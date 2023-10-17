@@ -8,6 +8,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,6 +35,9 @@ public class Media {
     @Column
     private String description;
 
+    @Column
+    private LocalDateTime scheduledTime;
+
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Timestamp uploadedDate;
@@ -45,9 +50,11 @@ public class Media {
     private List<Interests> interests;
 
 
-    public Media(String mediaPath, String mediaType, User users, List<Interests> interests) {
+    public Media(String mediaPath, String mediaType, String description, LocalDateTime scheduledTime, User users, List<Interests> interests) {
         this.mediaPath = mediaPath;
         this.mediaType = mediaType;
+        this.description = description;
+        this.scheduledTime = scheduledTime;
         this.users = users;
         this.interests = interests;
     }

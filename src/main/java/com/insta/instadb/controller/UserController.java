@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -21,14 +19,13 @@ public class UserController implements UserApi {
     private UserService userService;
 
     @Override
-    public ResponseEntity<?> newUser(@RequestBody User user) {
+    public ResponseEntity<?> newUser(User user) {
         return new ResponseEntity<>(userService.saveNewUser(user), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO updateUserDTO) {
-        System.out.println(updateUserDTO);
-        return null;
+    public ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO) {
+        return userService.updateUserDetails(updateUserDTO);
     }
 
     @Override
@@ -37,17 +34,22 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<?> newUser(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserByName(String username) {
+        return new ResponseEntity<>(userService.findUsersByUsername(username),HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> newUser(Long userId) {
         return userService.getUser(userId);
     }
 
     @Override
-    public ResponseEntity<?> checkUserName(@PathVariable String name) {
+    public ResponseEntity<?> checkUserName(String name) {
         return userService.validateUserName(name);
     }
 
     @Override
-    public ResponseEntity<?> authUser(@RequestBody LoginDTO loginDTO) {
+    public ResponseEntity<?> authUser(LoginDTO loginDTO) {
         return userService.authorizeUser(loginDTO);
     }
 
@@ -57,7 +59,12 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<?> friendsList(@PathVariable Long userId) {
+    public ResponseEntity<?> friendsList(Long userId) {
         return userService.getFriendsList(userId);
+    }
+
+    @Override
+    public ResponseEntity<?> getResetLink(String email) {
+        return null;
     }
 }

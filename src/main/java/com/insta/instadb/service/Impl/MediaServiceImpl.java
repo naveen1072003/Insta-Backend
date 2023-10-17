@@ -13,9 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class MediaServiceImpl implements MediaService {
@@ -43,7 +48,7 @@ public class MediaServiceImpl implements MediaService {
 
 
     @Override
-    public ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests) throws IOException {
+    public ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests, String description, String scheduledTime) throws IOException, ParseException {
         System.out.println(interests);
         List<Interests> interestsList = new ArrayList<>();
         List<Connectiondetails> connectionList = connectionService.getFollowers(userId);
@@ -57,16 +62,18 @@ public class MediaServiceImpl implements MediaService {
         for (int i = 0; i < interests.size(); i++) {
             interestsList.add(interestRepoService.getInterestbyName(interests.get(i)));
         }
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime parsedDateTime = LocalDateTime.parse(scheduledTime, formatter);
+        System.out.println(parsedDateTime);
         String filePath;
         if (Objects.requireNonNull(file.getContentType()).startsWith("image/")) {
             filePath = IMG_FOLDER_PATH + file.getOriginalFilename();
-            Media media = new Media(file.getOriginalFilename(), file.getContentType(), new User(userId), interestsList);
+            Media media = new Media(file.getOriginalFilename(), file.getContentType(), description, parsedDateTime, new User(userId), interestsList);
             file.transferTo(new File(filePath));
             return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
         } else {
             filePath = VID_FOLDER_PATH + file.getOriginalFilename();
-            Media media = new Media(file.getOriginalFilename(), file.getContentType(), new User(userId), interestsList);
+            Media media = new Media(file.getOriginalFilename(), file.getContentType(), description, parsedDateTime, new User(userId), interestsList);
             file.transferTo(new File(filePath));
             return new ResponseEntity<>(mediaRepoService.save(media), HttpStatus.OK);
         }
@@ -108,5 +115,10 @@ public class MediaServiceImpl implements MediaService {
     @Override
     public ResponseEntity<?> getCount(Long userId) {
         return new ResponseEntity<>(mediaRepoService.findMediaCount(userId), HttpStatus.OK);
+    }
+
+    @Override
+    public Optional<Media> getMediaById(Long id) {
+        return mediaRepoService.findMediaById(id);
     }
 }

@@ -6,6 +6,7 @@ import com.insta.instadb.repository.service.MediaRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class MediaRepoImpl implements MediaRepoService {
 
@@ -29,5 +30,10 @@ public class MediaRepoImpl implements MediaRepoService {
     @Override
     public List<Media> getAllMedia() {
         return mediaRepo.findAll();
+    }
+
+    @Override
+    public Optional<Media> findMediaById(Long id) {
+        return mediaRepo.findById(id);
     }
 }

@@ -76,7 +76,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public Optional<User> findUserById(Long userId) {
-        return Optional.ofNullable(userRepoService.findByUserId(userId));
+        return Optional.ofNullable(userRepoService.findByUserId(userId)).get();
     }
 
     @Override
@@ -111,7 +111,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
         List<User> userList = new ArrayList<>();
         for (Connectiondetails connectiondetails : mutual) {
-            userList.add(userRepoService.findByUserId(connectiondetails.getReceiver().getUserId()));
+            userList.add(userRepoService.findByUserId(connectiondetails.getReceiver().getUserId()).get());
         }
         return new ResponseEntity<>(userList, HttpStatus.OK);
     }
@@ -134,6 +134,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             return new ResponseEntity<>(jwtService.generateToken(email), HttpStatus.OK);
         }
         return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
+    }
+
+    @Override
+    public ResponseEntity<?> findUsersByUsername(String username) {
+        List<User> userList = userRepoService.findByUserName(username);
+        if(userList.isEmpty())
+            return new ResponseEntity<>("No users found at this Username",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(userList,HttpStatus.OK);
     }
 
 

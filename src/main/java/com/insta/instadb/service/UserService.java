@@ -4,6 +4,7 @@ import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.dto.UpdateUserDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -29,4 +30,6 @@ public interface UserService {
     ResponseEntity<?> removeAccount(Long userId);
 
     ResponseEntity<?> Oauthorize(String email);
+
+    ResponseEntity<?> findUsersByUsername(String username);
 }

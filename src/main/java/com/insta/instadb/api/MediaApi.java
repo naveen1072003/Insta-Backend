@@ -2,23 +2,23 @@ package com.insta.instadb.api;
 
 import com.insta.instadb.entity.ScheduledMedia;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 @RequestMapping("/api/v1/media")
 public interface MediaApi {
 
     @PostMapping("/addMedia")
-    ResponseEntity<?> addNewMedia(MultipartFile file,
-                                  Long userId, List<String> interests) throws IOException;
+    ResponseEntity<?> addNewMedia(MultipartFile file, Long userId, List<String> interests,
+                                  String description,String scheduledTime) throws IOException, ParseException;
 
-//    @DeleteMapping
+    //    @DeleteMapping
 //    ResponseEntity<?> reomoveMedia()
     @GetMapping("/getAllMedia/{userId}")
     ResponseEntity<?> getMediaByUser(Long userId) throws IOException;

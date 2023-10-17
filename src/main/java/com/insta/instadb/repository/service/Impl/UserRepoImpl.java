@@ -5,6 +5,7 @@ import com.insta.instadb.repository.UserRepo;
 import com.insta.instadb.repository.service.UserRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepoImpl implements UserRepoService {
@@ -23,8 +24,8 @@ public class UserRepoImpl implements UserRepoService {
     }
 
     @Override
-    public User findByUserId(Long id) {
-        return userRepo.findById(id).get();
+    public Optional<User> findByUserId(Long id) {
+        return userRepo.findById(id);
     }
 
     @Override
@@ -40,6 +41,11 @@ public class UserRepoImpl implements UserRepoService {
     @Override
     public void deleteUser(Long userId) {
          userRepo.deleteById(userId);
+    }
+
+    @Override
+    public List<User> findByUserName(String username) {
+        return userRepo.findUsersByUserNameContainingIgnoreCase(username);
     }
 
 
