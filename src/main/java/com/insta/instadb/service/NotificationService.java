@@ -10,4 +10,6 @@ public interface NotificationService {
     ResponseEntity<?> saveNotifications(Notifications notifications);
 
     ResponseEntity<?> getNotifications(Long userId);
+
+    ResponseEntity<?> removeNotification(Long userId);
 }

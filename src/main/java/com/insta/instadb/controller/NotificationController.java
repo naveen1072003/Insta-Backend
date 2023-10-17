@@ -16,7 +16,13 @@ public class NotificationController implements NotificationApi {
     private NotificationService notificationService;
 
     @Override
-    public ResponseEntity<?> getNotificationforUser(@PathVariable Long userId) {
+    public ResponseEntity<?> getNotificationforUser(Long userId) {
         return notificationService.getNotifications(userId);
+    }
+
+    @Override
+    public ResponseEntity<?> clearNotificationsforUser(Long userId) {
+        System.out.println(userId);
+        return notificationService.removeNotification(userId);
     }
 }

@@ -17,7 +17,6 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -36,29 +35,23 @@ public class RecommendServiceImpl implements RecommendService {
     public ResponseEntity<?> getRecommendUsers(Long userId) {
         String url = "http://localhost:5005/recommendation/recommended-friends/" + userId;
 
-        // Create HttpClient
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Accept", "application/json") // Set Accept header if expecting JSON response
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header("Accept", "application/json") // Set Accept header if expecting JSON response
                 .build();
         String users = "";
         try {
-            // Send the POST request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             users = response.body();
         } catch (Exception e) {
-            // Handle exceptions
             e.printStackTrace();
         }
-        users = users.replaceAll(" ", "");
+        users = users.replaceAll("\"", "");
         String[] str = users.substring(1, users.length() - 2).split(",");
-        System.out.println(Arrays.toString(str));
         List<User> userList = new ArrayList<>();
         for (int i = 0; i < str.length; i++) {
             Long id = Long.parseLong(str[i].replaceAll("\\s+", ""));
             User user = userService.findUserById(id).get();
-            if (connectionService.isFollower(userId, user.getUserId()) == null) {
+            if (connectionService.isFollower(userId, user.getUserId()).getBody() == null) {
                 userList.add(user);
             }
         }
@@ -69,17 +62,12 @@ public class RecommendServiceImpl implements RecommendService {
     public ResponseEntity<?> getRecommendMedia(Long userId) {
         String url = "http://localhost:5005/recommendation/recommended-interests/" + userId;
 
-        // Create HttpClient
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .header("Accept", "application/json") // Set Accept header if expecting JSON response
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header("Accept", "application/json") // Set Accept header if expecting JSON response
                 .build();
         try {
-            // Send the POST request and get the response
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
-            // Handle exceptions
             e.printStackTrace();
         }
         List<Media> mediaList = mediaRepoService.getAllMedia();

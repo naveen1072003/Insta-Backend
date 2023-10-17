@@ -23,4 +23,10 @@ public class NotificationServiceImpl implements NotificationService {
     public ResponseEntity<?> getNotifications(Long userId) {
         return new ResponseEntity<>(notificationRepoService.findAllNotifications(userId),HttpStatus.OK);
     }
+
+    @Override
+    public ResponseEntity<?> removeNotification(Long userId) {
+        notificationRepoService.deleteNotifications(userId);
+        return new ResponseEntity<>("Notifications Deleted !!!",HttpStatus.OK);
+    }
 }

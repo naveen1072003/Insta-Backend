@@ -15,12 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +33,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private UserRepoService userRepoService;
 
-//    @Autowired
-//    private JavaMailSender javaMailSender;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -42,6 +41,19 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
     private JwtService jwtService;
+
+//    @Autowired
+//    private JavaMailSender mailSender;
+//
+//    public void sendEmail(String to, String subject, String body) {
+//        MimeMessage mimeMailMessage = mailSender.createMimeMessage();
+//        SimpleMailMessage message = new SimpleMailMessage();
+//        message.setTo(to);
+//        message.setSubject(subject);
+//        message.setText(body);
+//
+//        mailSender.send(message);
+//    }
 
     @Override
     public ResponseEntity<?> saveNewUser(User user) {
@@ -139,9 +151,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public ResponseEntity<?> findUsersByUsername(String username) {
         List<User> userList = userRepoService.findByUserName(username);
-        if(userList.isEmpty())
-            return new ResponseEntity<>("No users found at this Username",HttpStatus.NOT_FOUND);
-        return new ResponseEntity<>(userList,HttpStatus.OK);
+        if (userList.isEmpty())
+            return new ResponseEntity<>("No users found at this Username", HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(userList, HttpStatus.OK);
     }
 
 

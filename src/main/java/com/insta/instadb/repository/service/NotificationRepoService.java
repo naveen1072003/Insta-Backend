@@ -12,4 +12,6 @@ public interface NotificationRepoService {
     Notifications save(Notifications notifications);
 
     List<Notifications> findAllNotifications(Long userId);
+
+    void deleteNotifications(Long userId);
 }

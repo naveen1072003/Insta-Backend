@@ -6,6 +6,7 @@ import com.insta.instadb.repository.service.NotificationRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -22,5 +23,11 @@ public class NotificationRepoServiceImpl implements NotificationRepoService {
     public List<Notifications> findAllNotifications(Long userId) {
         System.out.println(userId);
         return notificationRepo.findAllByUser_UserId(userId);
+    }
+
+    @Override
+    public void deleteNotifications(Long userId) {
+        System.out.println(userId);
+        notificationRepo.deleteAllById(Collections.singleton(userId));
     }
 }
