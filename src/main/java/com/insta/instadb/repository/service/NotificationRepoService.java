@@ -1,7 +1,6 @@
 package com.insta.instadb.repository.service;
 
 import com.insta.instadb.entity.Notifications;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

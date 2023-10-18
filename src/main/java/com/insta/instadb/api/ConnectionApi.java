@@ -3,27 +3,25 @@ package com.insta.instadb.api;
 import com.insta.instadb.dto.ConnectionDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/v1/request")
 public interface ConnectionApi {
     @PostMapping("/followRequest")
-    ResponseEntity<?> followRequest(Connectiondetails connectiondetails);
+    ResponseEntity<?> followRequest(@RequestBody Connectiondetails connectiondetails);
 
     @PostMapping("/removeFollow")
-    ResponseEntity<?> removeFollowRequest(ConnectionDTO connectionDTO);
+    ResponseEntity<?> removeFollowRequest(@RequestBody ConnectionDTO connectionDTO);
 
     @PostMapping("/getRequestedConnections/{userId}")
-    ResponseEntity<?> requestedList(Long userId);
+    ResponseEntity<?> requestedList(@PathVariable Long userId);
 
     @PostMapping("/acceptedRequest")
-    ResponseEntity<?> acceptedFollowRequest(ConnectionDTO connectionDTO);
+    ResponseEntity<?> acceptedFollowRequest(@RequestBody ConnectionDTO connectionDTO);
 
     @PostMapping("/rejectRequest")
-    ResponseEntity<?> rejectedFollowRequest(ConnectionDTO connectionDTO);
+    ResponseEntity<?> rejectedFollowRequest(@RequestBody ConnectionDTO connectionDTO);
 
     @GetMapping("/getConnectionCount/{userId}")
-    ResponseEntity<?> followersandfollwingCount(Long userId);
+    ResponseEntity<?> followersandfollwingCount(@PathVariable Long userId);
 }

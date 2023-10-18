@@ -8,7 +8,6 @@ import com.insta.instadb.repository.service.LikesRepoService;
 import com.insta.instadb.repository.service.UserRepoService;
 import com.insta.instadb.service.LikesService;
 import com.insta.instadb.service.MediaService;
-import com.insta.instadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,11 +34,11 @@ public class LikesServiceImpl implements LikesService {
         if (media.isPresent()) {
             List<Interests> userInterest = user.getInterests();
             userInterest.addAll(media.get().getInterests());
-            
-            Map<Long,Interests> interestsMap = new HashMap<>();
-            for (Interests interests:userInterest) {
-                if(!interestsMap.containsKey(interests.getInterestId())){
-                    interestsMap.put(interests.getInterestId(),interests);
+
+            Map<Long, Interests> interestsMap = new HashMap<>();
+            for (Interests interests : userInterest) {
+                if (!interestsMap.containsKey(interests.getInterestId())) {
+                    interestsMap.put(interests.getInterestId(), interests);
                 }
             }
             user.setInterests(new ArrayList<>(interestsMap.values()));

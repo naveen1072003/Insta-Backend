@@ -18,7 +18,7 @@ public class Status {
     @Column
     private String status;
 
-    public Status(Long id){
+    public Status(Long id) {
         this.id = id;
     }
 

@@ -12,6 +12,7 @@ public class MediaRepoImpl implements MediaRepoService {
 
     @Autowired
     private MediaRepo mediaRepo;
+
     @Override
     public Media save(Media media) {
         return mediaRepo.save(media);

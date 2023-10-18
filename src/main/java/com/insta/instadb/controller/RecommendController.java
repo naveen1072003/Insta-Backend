@@ -5,7 +5,6 @@ import com.insta.instadb.service.RecommendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -16,12 +15,12 @@ public class RecommendController implements RecommendationApi {
     private RecommendService recommendService;
 
     @Override
-    public ResponseEntity<?> reCommend(@PathVariable Long userId) {
+    public ResponseEntity<?> reCommend(Long userId) {
         return recommendService.getRecommendUsers(userId);
     }
 
     @Override
-    public ResponseEntity<?> reCommendMedia(@PathVariable Long userId) {
+    public ResponseEntity<?> reCommendMedia(Long userId) {
         return recommendService.getRecommendMedia(userId);
     }
 }

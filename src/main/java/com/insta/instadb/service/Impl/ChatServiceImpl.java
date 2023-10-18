@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -26,16 +25,16 @@ public class ChatServiceImpl implements ChatService {
 
     @Override
     public ResponseEntity<?> saveChat(Chats chats) {
-        chatListService.saveChatList(chats.getUser1(),chats.getUser2());
+        chatListService.saveChatList(chats.getUser1(), chats.getUser2());
         return new ResponseEntity<>(chatRepoService.saveChat(chats), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<?> getAllUserChats(UserChatDTO userChatDTO) {
-        Map<Long,Chats> chatsMap = new TreeMap<>();
+        Map<Long, Chats> chatsMap = new TreeMap<>();
         List<Chats> chatsList = chatRepoService.getAllChats(userChatDTO);
-        for (Chats  chats:chatsList) {
-            chatsMap.put(chats.getId(),chats);
+        for (Chats chats : chatsList) {
+            chatsMap.put(chats.getId(), chats);
         }
         return new ResponseEntity<>(chatsMap, HttpStatus.OK);
     }

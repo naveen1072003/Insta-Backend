@@ -35,11 +35,11 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<?> getUserByName(String username) {
-        return new ResponseEntity<>(userService.findUsersByUsername(username),HttpStatus.OK);
+        return new ResponseEntity<>(userService.findUsersByUsername(username), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> newUser(Long userId) {
+    public ResponseEntity<?> getUser(Long userId) {
         return userService.getUser(userId);
     }
 

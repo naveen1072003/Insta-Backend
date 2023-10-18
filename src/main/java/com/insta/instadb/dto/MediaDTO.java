@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -20,6 +21,10 @@ public class MediaDTO {
     private String mediaType;
 
     private User users;
+
+    private LocalDateTime scheduledTime;
+
+    private String description;
 
     private Timestamp uploadedDate;
 

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface  LikesService {
+public interface LikesService {
 
     ResponseEntity<?> saveLikes(Likes likes);
 

@@ -40,7 +40,7 @@ public class UserRepoImpl implements UserRepoService {
 
     @Override
     public void deleteUser(Long userId) {
-         userRepo.deleteById(userId);
+        userRepo.deleteById(userId);
     }
 
     @Override

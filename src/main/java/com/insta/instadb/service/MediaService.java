@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 public interface MediaService {
-    ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests,String description,String scheduledTime) throws IOException, ParseException;
+    ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests, String description, String scheduledTime) throws IOException, ParseException;
 
     ResponseEntity<?> getMediaByUser(Long userId) throws IOException;
 

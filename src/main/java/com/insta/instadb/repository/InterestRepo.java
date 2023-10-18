@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface InterestRepo extends JpaRepository<Interests,Long> {
+public interface InterestRepo extends JpaRepository<Interests, Long> {
     Interests findInterestsByContent(String s);
 
 }

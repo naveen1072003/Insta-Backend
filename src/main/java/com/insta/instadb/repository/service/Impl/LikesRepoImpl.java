@@ -11,6 +11,7 @@ public class LikesRepoImpl implements LikesRepoService {
 
     @Autowired
     private LikesRepo likesRepo;
+
     @Override
     public Likes save(Likes likes) {
         return likesRepo.save(likes);
@@ -18,7 +19,7 @@ public class LikesRepoImpl implements LikesRepoService {
 
     @Override
     public Long findLikesCountByMedia(Long userId) {
-        System.out.println(userId+"likes");
+        System.out.println(userId + "likes");
         return likesRepo.countLikesByMedia_Id(userId);
     }
 }

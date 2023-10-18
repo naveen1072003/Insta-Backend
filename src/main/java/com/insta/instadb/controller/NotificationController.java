@@ -5,7 +5,6 @@ import com.insta.instadb.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -22,7 +21,6 @@ public class NotificationController implements NotificationApi {
 
     @Override
     public ResponseEntity<?> clearNotificationsforUser(Long userId) {
-        System.out.println(userId);
         return notificationService.removeNotification(userId);
     }
 }

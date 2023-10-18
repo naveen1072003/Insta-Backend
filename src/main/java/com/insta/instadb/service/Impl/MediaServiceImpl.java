@@ -14,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -25,27 +24,20 @@ import java.util.Optional;
 @Service
 public class MediaServiceImpl implements MediaService {
 
-    @Autowired
-    private MediaRepoService mediaRepoService;
-
-    @Autowired
-    private InterestRepoService interestRepoService;
-
-    @Autowired
-    private LikesService likesService;
-
-    @Autowired
-    private CommentService commentService;
-
-    @Autowired
-    private ConnectionService connectionService;
-
-    @Autowired
-    private NotificationService notificationService;
-
     String IMG_FOLDER_PATH = "/home/divum/IdeaProjects/InstaDB/src/main/resources/static/images/";
     String VID_FOLDER_PATH = "/home/divum/IdeaProjects/InstaDB/src/main/resources/static/images/";
-
+    @Autowired
+    private MediaRepoService mediaRepoService;
+    @Autowired
+    private InterestRepoService interestRepoService;
+    @Autowired
+    private LikesService likesService;
+    @Autowired
+    private CommentService commentService;
+    @Autowired
+    private ConnectionService connectionService;
+    @Autowired
+    private NotificationService notificationService;
 
     @Override
     public ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests, String description, String scheduledTime) throws IOException, ParseException {

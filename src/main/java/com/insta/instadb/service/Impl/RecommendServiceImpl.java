@@ -1,8 +1,10 @@
 package com.insta.instadb.service.Impl;
 
+import com.insta.instadb.dto.MediaDTO;
 import com.insta.instadb.entity.Interests;
 import com.insta.instadb.entity.Media;
 import com.insta.instadb.entity.User;
+import com.insta.instadb.repository.service.LikesRepoService;
 import com.insta.instadb.repository.service.MediaRepoService;
 import com.insta.instadb.service.ConnectionService;
 import com.insta.instadb.service.RecommendService;
@@ -30,6 +32,9 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Autowired
     private MediaRepoService mediaRepoService;
+
+    @Autowired
+    private LikesRepoService likesRepoService;
 
     @Override
     public ResponseEntity<?> getRecommendUsers(Long userId) {
@@ -78,14 +83,22 @@ public class RecommendServiceImpl implements RecommendService {
             userInterest.append(interests.getContent()).append(" ");
         }
         String inter = userInterest.toString();
-        List<Media> media = new ArrayList<>();
+        List<MediaDTO> responsemediaList = new ArrayList<>();
         for (Media media1 : mediaList) {
-            for (Interests interests : media1.getInterests()) {
-                if (inter.contains(interests.getContent())) {
-                    media.add(media1);
+            if (media1.getUsers().getUserId() != userId) {
+                for (Interests interests : media1.getInterests()) {
+                    if (inter.contains(interests.getContent())) {
+                        MediaDTO mediaDTO = new MediaDTO();
+                        mediaDTO.setMediaContent(media1.getMediaPath());
+                        mediaDTO.setMediaType(media1.getMediaType());
+                        mediaDTO.setScheduledTime(media1.getScheduledTime());
+                        mediaDTO.setLikes(likesRepoService.findLikesCountByMedia(media1.getId()));
+                        mediaDTO.setDescription(mediaDTO.getDescription());
+                        responsemediaList.add(mediaDTO);
+                    }
                 }
             }
         }
-        return new ResponseEntity<>(media, HttpStatus.OK);
+        return new ResponseEntity<>(responsemediaList, HttpStatus.OK);
     }
 }

@@ -19,8 +19,9 @@ public interface UserApi {
 
     @GetMapping("/searchUser/{username}")
     ResponseEntity<?> getUserByName(@PathVariable String username);
+
     @GetMapping("/getUser/{userId}")
-    ResponseEntity<?> newUser(@PathVariable Long userId);
+    ResponseEntity<?> getUser(@PathVariable Long userId);
 
     @GetMapping("/isUser/{name}")
     ResponseEntity<?> checkUserName(@PathVariable String name);

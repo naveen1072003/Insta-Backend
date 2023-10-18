@@ -15,14 +15,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -42,30 +40,20 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private JwtService jwtService;
 
-//    @Autowired
-//    private JavaMailSender mailSender;
-//
-//    public void sendEmail(String to, String subject, String body) {
-//        MimeMessage mimeMailMessage = mailSender.createMimeMessage();
-//        SimpleMailMessage message = new SimpleMailMessage();
-//        message.setTo(to);
-//        message.setSubject(subject);
-//        message.setText(body);
-//
-//        mailSender.send(message);
-//    }
+    @Autowired
+    private JavaMailSender mailSender;
 
     @Override
     public ResponseEntity<?> saveNewUser(User user) {
         if (checkIfUser(user.getEmail())) {
             return new ResponseEntity<>(user.getUserName(), HttpStatus.BAD_REQUEST);
         } else {
-            SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-            String subject;
-            simpleMailMessage.setTo("");
-//            javaMailSender.send(simpleMailMessage);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-            simpleMailMessage.setFrom("naveenrangaraju450@gmail.com");
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("naveenrangaraju450@gmail.com");
+            message.setTo(user.getEmail());
+            message.setSubject("Verification email:");
+            message.setText("Hi " + user.getUserName() + " you have been successfully created!!!");
+            mailSender.send(message);
             return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
         }
     }

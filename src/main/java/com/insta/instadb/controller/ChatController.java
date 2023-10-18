@@ -8,7 +8,8 @@ import com.insta.instadb.service.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
 @RestController
@@ -21,18 +22,18 @@ public class ChatController implements ChatApi {
     private ChatListService chatListService;
 
     @Override
-    public ResponseEntity<?> addMessage(@RequestBody Chats chats) {
+    public ResponseEntity<?> addMessage(Chats chats) {
         System.out.println(chats);
         return chatService.saveChat(chats);
     }
 
     @Override
-    public ResponseEntity<?> getUserChatList(@PathVariable Long userId) {
+    public ResponseEntity<?> getUserChatList(Long userId) {
         return chatListService.getChatList(userId);
     }
 
     @Override
-    public ResponseEntity<?> getUserChats(@RequestBody UserChatDTO userChatDTO) {
+    public ResponseEntity<?> getUserChats(UserChatDTO userChatDTO) {
         return new ResponseEntity<>(chatService.getAllUserChats(userChatDTO), HttpStatus.OK);
     }
 }

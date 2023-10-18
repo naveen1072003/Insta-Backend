@@ -17,7 +17,7 @@ public class Interests {
 
     private String content;
 
-    public Interests(String content){
+    public Interests(String content) {
         this.content = content;
     }
 

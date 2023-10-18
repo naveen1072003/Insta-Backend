@@ -1,10 +1,7 @@
 package com.insta.instadb.api;
 
-import com.insta.instadb.entity.ScheduledMedia;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,20 +12,18 @@ import java.util.List;
 public interface MediaApi {
 
     @PostMapping("/addMedia")
-    ResponseEntity<?> addNewMedia(MultipartFile file, Long userId, List<String> interests,
-                                  String description,String scheduledTime) throws IOException, ParseException;
+    ResponseEntity<?> addNewMedia(@RequestParam("file") MultipartFile file, @RequestParam Long userId, @RequestParam List<String> interests,
+                                  @RequestParam String description, @RequestParam String scheduledTime) throws IOException, ParseException;
 
     //    @DeleteMapping
 //    ResponseEntity<?> reomoveMedia()
     @GetMapping("/getAllMedia/{userId}")
-    ResponseEntity<?> getMediaByUser(Long userId) throws IOException;
+    ResponseEntity<?> getMediaByUser(@PathVariable Long userId) throws IOException;
 
     @GetMapping("/getMediaCount/{userId}")
-    ResponseEntity<?> getMediaCount(Long userId);
+    ResponseEntity<?> getMediaCount(@PathVariable Long userId);
 
     @PostMapping("/addInterest/{interests}")
-    ResponseEntity<?> addInterest(String interests);
+    ResponseEntity<?> addInterest(@PathVariable String interests);
 
-    @PostMapping("/addSchedulePost")
-    ResponseEntity<?> addSchedulePost(ScheduledMedia media);
 }

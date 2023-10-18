@@ -11,6 +11,7 @@ public class InterestImplService implements InterestRepoService {
 
     @Autowired
     private InterestRepo interestRepo;
+
     @Override
     public void save(Interests interests) {
         interestRepo.save(interests);

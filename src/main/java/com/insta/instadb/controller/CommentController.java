@@ -6,7 +6,6 @@ import com.insta.instadb.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin
@@ -16,7 +15,7 @@ public class CommentController implements CommentApi {
     private CommentService commentService;
 
     @Override
-    public ResponseEntity<?> addComment(@RequestBody Comments comments) {
+    public ResponseEntity<?> addComment(Comments comments) {
         return commentService.saveComment(comments);
     }
 }
