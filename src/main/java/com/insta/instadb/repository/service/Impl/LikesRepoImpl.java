@@ -6,6 +6,8 @@ import com.insta.instadb.repository.service.LikesRepoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LikesRepoImpl implements LikesRepoService {
 
@@ -21,5 +23,11 @@ public class LikesRepoImpl implements LikesRepoService {
     public Long findLikesCountByMedia(Long userId) {
         System.out.println(userId + "likes");
         return likesRepo.countLikesByMedia_Id(userId);
+    }
+
+    @Override
+    public boolean isLiked(Long mediaId, Long userId) {
+        Optional<Likes> likes = likesRepo.findLikesByMedia_IdAndUser_UserId(mediaId,userId);
+        return likes.isPresent();
     }
 }

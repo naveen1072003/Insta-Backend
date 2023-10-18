@@ -85,7 +85,7 @@ public class RecommendServiceImpl implements RecommendService {
         String inter = userInterest.toString();
         List<MediaDTO> responsemediaList = new ArrayList<>();
         for (Media media1 : mediaList) {
-            if (media1.getUsers().getUserId() != userId) {
+            if (media1.getUsers().getUserId() != userId && !likesRepoService.isLiked(media1.getId(),userId)) {
                 for (Interests interests : media1.getInterests()) {
                     if (inter.contains(interests.getContent())) {
                         MediaDTO mediaDTO = new MediaDTO();

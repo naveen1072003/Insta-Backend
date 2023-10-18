@@ -8,4 +8,6 @@ public interface LikesRepoService {
     Likes save(Likes likes);
 
     Long findLikesCountByMedia(Long userId);
+
+    boolean isLiked(Long id, Long userId);
 }
