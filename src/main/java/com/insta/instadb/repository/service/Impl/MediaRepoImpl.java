@@ -37,4 +37,9 @@ public class MediaRepoImpl implements MediaRepoService {
     public Optional<Media> findMediaById(Long id) {
         return mediaRepo.findById(id);
     }
+
+    @Override
+    public List<Media> getAllMediaByTagId(Long interestId) {
+        return mediaRepo.findMediaByInterests(interestId);
+    }
 }

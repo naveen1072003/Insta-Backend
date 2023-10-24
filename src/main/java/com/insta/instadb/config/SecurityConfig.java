@@ -39,13 +39,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.cors().and().csrf().disable()
-                .authorizeHttpRequests().requestMatchers("/api/v1/userdetails/newUser", "/api/v1/userdetails/loginAuth", "/api/v1/userdetails/isUser/*", "/images/*", "/videos/*").permitAll().
-                requestMatchers("/api/v1/message/**", "/api/v1/comments/**",
+                .authorizeHttpRequests().requestMatchers("/api/v1/userdetails/newUser", "/api/v1/userdetails/loginAuth",
+                        "/api/v1/userdetails/isUser/*", "/api/v1/userdetails/isEmailexist/*", "/api/v1/userdetails/oauthUser/*", "/images/*", "/videos/*").permitAll()
+                .requestMatchers("/api/v1/message/**", "/api/v1/comments/**",
                         "/api/v1/request/**", "/api/v1/likes/*", "/api/v1/media/**",
                         "/api/v1/notifyUser/**", "/api/v1/userRecommend/**",
                         "/api/v1/userdetails/getUser/*", "/api/v1/userdetails/updateUser",
                         "/api/v1/userdetails/deleteUser/*", "/api/v1/userdetails/searchUser/*",
-                        "/api/v1/userdetails/getFriendsList/*", "/api/v1/userdetails/forgotPassword/*").authenticated()
+                        "/api/v1/userdetails/getFriendsList/*", "/api/v1/userdetails/forgotPassword/*","/api/v1/media/getMedia/*").authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authenticationProvider(authenticationProvider())
                 .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter.class)

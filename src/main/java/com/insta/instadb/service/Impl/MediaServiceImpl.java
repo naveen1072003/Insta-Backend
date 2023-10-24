@@ -113,4 +113,10 @@ public class MediaServiceImpl implements MediaService {
     public Optional<Media> getMediaById(Long id) {
         return mediaRepoService.findMediaById(id);
     }
+
+    @Override
+    public ResponseEntity<?> getMediaByTag(String tag) {
+        Interests interests = interestRepoService.getInterestbyName(tag);
+        return new ResponseEntity<>(mediaRepoService.getAllMediaByTagId(interests.getInterestId()),HttpStatus.OK);
+    }
 }

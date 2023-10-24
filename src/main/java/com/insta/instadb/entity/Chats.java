@@ -28,6 +28,5 @@ public class Chats {
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
-    @Column
     private Timestamp sendDate;
 }

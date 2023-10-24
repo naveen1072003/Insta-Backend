@@ -25,5 +25,7 @@ public interface MediaApi {
 
     @PostMapping("/addInterest/{interests}")
     ResponseEntity<?> addInterest(@PathVariable String interests);
+    @GetMapping("/getMedia/{tag}")
+    ResponseEntity<?> getMediaByTag(@PathVariable String tag);
 
 }

@@ -30,7 +30,7 @@ public class UserRepoImpl implements UserRepoService {
 
     @Override
     public User isUserNamePresent(String name) {
-        return userRepo.findByUserName(name);
+        return userRepo.findByUserNameEqualsIgnoreCase(name);
     }
 
     @Override

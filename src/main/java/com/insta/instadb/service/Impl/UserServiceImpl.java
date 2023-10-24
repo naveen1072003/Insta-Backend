@@ -54,6 +54,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             message.setSubject("Verification email:");
             message.setText("Hi " + user.getUserName() + " you have been successfully created!!!");
             mailSender.send(message);
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
             return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
         }
     }
@@ -65,6 +66,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         user.setFirstName(updateUserDTO.getUserDTO().getFirstName());
         user.setLastName(updateUserDTO.getUserDTO().getLastName());
         user.setPhNo(updateUserDTO.getUserDTO().getPhNo());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
     }
 
@@ -83,7 +85,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public ResponseEntity<?> validateUserName(String name) {
         User user = userRepoService.isUserNamePresent(name);
         if (user != null) {
-            return new ResponseEntity<>("Username already exists", HttpStatus.OK);
+            return new ResponseEntity<>("Username already exists", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>("Valid Username", HttpStatus.OK);
     }
@@ -131,7 +133,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public ResponseEntity<?> Oauthorize(String email) {
         Optional<User> user = userRepoService.findUserByEmail(email);
         if (user.isPresent()) {
-            return new ResponseEntity<>(jwtService.generateToken(email), HttpStatus.OK);
+            LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+            loginResponseDTO.setAccessToken(jwtService.generateToken(email));
+            loginResponseDTO.setUserId(user.get().getUserId());
+            return new ResponseEntity<>(loginResponseDTO, HttpStatus.OK);
         }
         return new ResponseEntity<>(user, HttpStatus.NOT_FOUND);
     }
@@ -142,6 +147,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         if (userList.isEmpty())
             return new ResponseEntity<>("No users found at this Username", HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(userList, HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<?> validateEmail(String email) {
+        Optional<User> user = userRepoService.findUserByEmail(email);
+        if (user.isEmpty()) {
+            return new ResponseEntity<>("Valid email", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Email already exists with username " + user.get().getUserName(), HttpStatus.BAD_REQUEST);
     }
 
 

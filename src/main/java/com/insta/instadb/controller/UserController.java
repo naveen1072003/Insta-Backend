@@ -25,6 +25,7 @@ public class UserController implements UserApi {
 
     @Override
     public ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO) {
+        System.out.println(updateUserDTO);
         return userService.updateUserDetails(updateUserDTO);
     }
 
@@ -49,12 +50,19 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public ResponseEntity<?> checkEmail(String email) {
+        return userService.validateEmail(email);
+    }
+
+    @Override
     public ResponseEntity<?> authUser(LoginDTO loginDTO) {
         return userService.authorizeUser(loginDTO);
     }
 
     @Override
     public ResponseEntity<?> oAuth(String email) {
+
+        System.out.println(email);
         return userService.Oauthorize(email);
     }
 

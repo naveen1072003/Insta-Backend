@@ -31,4 +31,6 @@ public interface UserService {
     ResponseEntity<?> Oauthorize(String email);
 
     ResponseEntity<?> findUsersByUsername(String username);
+
+    ResponseEntity<?> validateEmail(String email);
 }

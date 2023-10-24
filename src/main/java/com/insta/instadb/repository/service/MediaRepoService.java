@@ -17,4 +17,6 @@ public interface MediaRepoService {
     List<Media> getAllMedia();
 
     Optional<Media> findMediaById(Long id);
+
+    List<Media> getAllMediaByTagId(Long interestId);
 }

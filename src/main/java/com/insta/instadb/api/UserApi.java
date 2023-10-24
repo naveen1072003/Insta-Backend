@@ -11,7 +11,7 @@ public interface UserApi {
     @PostMapping("/newUser")
     ResponseEntity<?> newUser(@RequestBody User user);
 
-    @PutMapping("/updateUser")
+    @PostMapping("/updateUser")
     ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO updateUserDTO);
 
     @DeleteMapping("/deleteUser/{userId}")
@@ -25,6 +25,9 @@ public interface UserApi {
 
     @GetMapping("/isUser/{name}")
     ResponseEntity<?> checkUserName(@PathVariable String name);
+
+    @GetMapping("/isEmailexist/{email}")
+    ResponseEntity<?> checkEmail(@PathVariable String email);
 
     @PostMapping("/loginAuth")
     ResponseEntity<?> authUser(@RequestBody LoginDTO loginDTO);

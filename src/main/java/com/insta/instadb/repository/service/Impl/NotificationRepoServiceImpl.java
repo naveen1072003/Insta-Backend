@@ -22,7 +22,6 @@ public class NotificationRepoServiceImpl implements NotificationRepoService {
 
     @Override
     public List<Notifications> findAllNotifications(Long userId) {
-        System.out.println(userId);
         return notificationRepo.findAllByUser_UserId(userId);
     }
 
