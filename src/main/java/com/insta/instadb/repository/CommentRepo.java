@@ -9,5 +9,5 @@ import java.util.List;
 @Repository
 public interface CommentRepo extends JpaRepository<Comments, Long> {
 
-    List<Comments> findAllByMedia_Id(Long id);
+    List<Comments> findAllByMedia_IdOrderByTimestampDesc(Long id);
 }

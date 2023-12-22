@@ -5,6 +5,7 @@ import com.insta.instadb.entity.*;
 import com.insta.instadb.repository.service.InterestRepoService;
 import com.insta.instadb.repository.service.MediaRepoService;
 import com.insta.instadb.service.*;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,9 @@ public class MediaServiceImpl implements MediaService {
     private ConnectionService connectionService;
     @Autowired
     private NotificationService notificationService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<?> saveMedia(MultipartFile file, Long userId, List<String> interests, String description, String scheduledTime) throws IOException, ParseException {
@@ -81,11 +85,7 @@ public class MediaServiceImpl implements MediaService {
             Long count = likesService.getLikesCountByMedia(media.getId());
 
             MediaDTO mediaDTO = new MediaDTO();
-            mediaDTO.setMediaContent(media.getMediaPath());
-            mediaDTO.setMediaType(media.getMediaType());
-            mediaDTO.setUploadedDate(media.getUploadedDate());
-            mediaDTO.setTags(media.getInterests());
-            mediaDTO.setUsers(media.getUsers());
+            modelMapper.map(media,mediaDTO);
             mediaDTO.setLikes(count);
             mediaDTO.setComments(commentsList);
 

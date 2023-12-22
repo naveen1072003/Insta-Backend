@@ -2,6 +2,7 @@ package com.insta.instadb.api;
 
 import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.dto.UpdateUserDTO;
+import com.insta.instadb.dto.UserDTO;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +13,7 @@ public interface UserApi {
     ResponseEntity<?> newUser(@RequestBody User user);
 
     @PostMapping("/updateUser")
-    ResponseEntity<?> updateUser(@RequestBody UpdateUserDTO updateUserDTO);
+    ResponseEntity<?> updateUser(@RequestBody UserDTO updateUserDTO);
 
     @DeleteMapping("/deleteUser/{userId}")
     ResponseEntity<?> deleteUser(@PathVariable Long userId);

@@ -1,6 +1,8 @@
 package com.insta.instadb.controller;
 
 import com.insta.instadb.api.LikesApi;
+import com.insta.instadb.dto.LikesDTO;
+import com.insta.instadb.dto.MediaDTO;
 import com.insta.instadb.entity.Likes;
 import com.insta.instadb.service.LikesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class LikesController implements LikesApi {
     private LikesService likesService;
 
     @Override
-    public ResponseEntity<?> addLike(Likes likes) {
+    public ResponseEntity<?> addLike(LikesDTO likes) {
         return likesService.saveLikes(likes);
     }
 }

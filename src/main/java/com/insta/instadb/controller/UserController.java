@@ -3,6 +3,7 @@ package com.insta.instadb.controller;
 import com.insta.instadb.api.UserApi;
 import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.dto.UpdateUserDTO;
+import com.insta.instadb.dto.UserDTO;
 import com.insta.instadb.entity.User;
 import com.insta.instadb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class UserController implements UserApi {
     }
 
     @Override
-    public ResponseEntity<?> updateUser(UpdateUserDTO updateUserDTO) {
+    public ResponseEntity<?> updateUser(UserDTO updateUserDTO) {
         System.out.println(updateUserDTO);
         return userService.updateUserDetails(updateUserDTO);
     }

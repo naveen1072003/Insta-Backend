@@ -5,6 +5,8 @@ import com.insta.instadb.dto.UserChatDTO;
 import com.insta.instadb.entity.Chats;
 import com.insta.instadb.service.ChatListService;
 import com.insta.instadb.service.ChatService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +24,19 @@ public class ChatController implements ChatApi {
     private ChatListService chatListService;
 
     @Override
-    public ResponseEntity<?> addMessage(Chats chats) {
+    public ResponseEntity<?> addMessage(Chats chats,HttpServletRequest httpServletRequest) {
         System.out.println(chats);
+
+        String authorizationHeader = httpServletRequest.getHeader("Authorization");
+
+        // Token might look like 'Bearer <actual_token_value>'
+        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            String token = authorizationHeader.substring(7); // Remove "Bearer " prefix
+            System.out.println(token);
+        } else {
+            System.out.println("No token provided in the request headers");
+        }
+
         return chatService.saveChat(chats);
     }
 

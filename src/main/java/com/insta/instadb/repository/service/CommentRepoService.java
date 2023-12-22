@@ -10,4 +10,5 @@ public interface CommentRepoService {
     void save(Comments comments);
 
     List<Comments> getComment(Long id);
+
 }

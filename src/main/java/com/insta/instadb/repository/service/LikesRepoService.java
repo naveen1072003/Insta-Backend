@@ -9,5 +9,5 @@ public interface LikesRepoService {
 
     Long findLikesCountByMedia(Long userId);
 
-    boolean isLiked(Long id, Long userId);
+    boolean isLiked(Long mediaId, Long userId);
 }

@@ -4,11 +4,13 @@ import com.insta.instadb.dto.MediaDTO;
 import com.insta.instadb.entity.Interests;
 import com.insta.instadb.entity.Media;
 import com.insta.instadb.entity.User;
+import com.insta.instadb.repository.service.CommentRepoService;
 import com.insta.instadb.repository.service.LikesRepoService;
 import com.insta.instadb.repository.service.MediaRepoService;
 import com.insta.instadb.service.ConnectionService;
 import com.insta.instadb.service.RecommendService;
 import com.insta.instadb.service.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class RecommendServiceImpl implements RecommendService {
@@ -35,6 +38,12 @@ public class RecommendServiceImpl implements RecommendService {
 
     @Autowired
     private LikesRepoService likesRepoService;
+
+    @Autowired
+    private CommentRepoService commentRepoService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public ResponseEntity<?> getRecommendUsers(Long userId) {
@@ -56,7 +65,7 @@ public class RecommendServiceImpl implements RecommendService {
         for (int i = 0; i < str.length; i++) {
             Long id = Long.parseLong(str[i].replaceAll("\\s+", ""));
             User user = userService.findUserById(id).get();
-            if (connectionService.isFollower(userId, user.getUserId()).getBody() == null) {
+            if (connectionService.isFollower(userId, user.getUserId()).getBody() == null && !Objects.equals(user.getUserId(), userId)) {
                 userList.add(user);
             }
         }
@@ -70,8 +79,9 @@ public class RecommendServiceImpl implements RecommendService {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(url)).header("Accept", "application/json") // Set Accept header if expecting JSON response
                 .build();
+        HttpResponse<String> response;
         try {
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            response = client.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,16 +95,17 @@ public class RecommendServiceImpl implements RecommendService {
         String inter = userInterest.toString();
         List<MediaDTO> responsemediaList = new ArrayList<>();
         for (Media media1 : mediaList) {
-            if (media1.getUsers().getUserId() != userId && !likesRepoService.isLiked(media1.getId(),userId)) {
+
+            if (media1.getUsers().getUserId() != userId) {
                 for (Interests interests : media1.getInterests()) {
                     if (inter.contains(interests.getContent())) {
                         MediaDTO mediaDTO = new MediaDTO();
-                        mediaDTO.setMediaContent(media1.getMediaPath());
-                        mediaDTO.setMediaType(media1.getMediaType());
-                        mediaDTO.setScheduledTime(media1.getScheduledTime());
+                        modelMapper.map(media1, mediaDTO);
+                        mediaDTO.setComments(commentRepoService.getComment(media1.getId()));
+                        mediaDTO.setLiked(likesRepoService.isLiked(media1.getId(), userId));
                         mediaDTO.setLikes(likesRepoService.findLikesCountByMedia(media1.getId()));
-                        mediaDTO.setDescription(mediaDTO.getDescription());
-                        responsemediaList.add(mediaDTO);
+                        if (!responsemediaList.contains(mediaDTO))
+                            responsemediaList.add(mediaDTO);
                     }
                 }
             }

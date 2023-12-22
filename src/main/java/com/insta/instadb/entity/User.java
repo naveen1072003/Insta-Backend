@@ -1,5 +1,6 @@
 package com.insta.instadb.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,43 +21,44 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @JsonIgnore
     private Long userId;
 
-    @Column
+
     private String userName;
 
-    @Column
+
     private String firstName;
 
-    @Column
+
     private String lastName;
 
-    @Column
+
     private String userProfile;
 
-    @Column
+
     private String email;
 
-    @Column
+
     private String phNo;
 
-    @Column
+//    @JsonIgnore
     private String password;
 
     @Temporal(TemporalType.TIMESTAMP)
     @CreatedDate
     private Timestamp createdDate;
 
-    @Column
+
     private String gender;
 
-    @Column
+
     private String dateOfBirth;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Interests> interests;
 
-    @Column
+
     private String accountType;
 
     public User(Long userId) {

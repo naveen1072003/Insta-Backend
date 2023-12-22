@@ -21,13 +21,12 @@ public class LikesRepoImpl implements LikesRepoService {
 
     @Override
     public Long findLikesCountByMedia(Long userId) {
-        System.out.println(userId + "likes");
         return likesRepo.countLikesByMedia_Id(userId);
     }
 
     @Override
     public boolean isLiked(Long mediaId, Long userId) {
-        Optional<Likes> likes = likesRepo.findLikesByMedia_IdAndUser_UserId(mediaId,userId);
+        Optional<Likes> likes = likesRepo.findLikesByMedia_IdAndUser_UserId(mediaId, userId);
         return likes.isPresent();
     }
 }

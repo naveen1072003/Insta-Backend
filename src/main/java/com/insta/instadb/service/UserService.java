@@ -2,6 +2,7 @@ package com.insta.instadb.service;
 
 import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.dto.UpdateUserDTO;
+import com.insta.instadb.dto.UserDTO;
 import com.insta.instadb.entity.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.Optional;
 public interface UserService {
     ResponseEntity<?> saveNewUser(User user);
 
-    ResponseEntity<?> updateUserDetails(UpdateUserDTO updateUserDTO);
+    ResponseEntity<?> updateUserDetails(UserDTO updateUserDTO);
 
     boolean checkIfUser(String email);
 

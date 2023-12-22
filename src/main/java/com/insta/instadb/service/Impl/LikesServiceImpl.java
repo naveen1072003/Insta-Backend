@@ -1,5 +1,6 @@
 package com.insta.instadb.service.Impl;
 
+import com.insta.instadb.dto.LikesDTO;
 import com.insta.instadb.entity.Interests;
 import com.insta.instadb.entity.Likes;
 import com.insta.instadb.entity.Media;
@@ -27,9 +28,17 @@ public class LikesServiceImpl implements LikesService {
     private MediaService mediaService;
 
     @Override
-    public ResponseEntity<?> saveLikes(Likes likes) {
-        User user = userRepoService.findByUserId(likes.getUser().getUserId()).get();
-        Optional<Media> media = mediaService.getMediaById(likes.getMedia().getId());
+    public ResponseEntity<?> saveLikes(LikesDTO likes) {
+
+        if (likesRepoService.isLiked(likes.getMediaId(), likes.getUserId())) {
+            return new ResponseEntity<>("Already Liked", HttpStatus.BAD_REQUEST);
+        }
+
+        Likes mediaLike = new Likes();
+        User user = userRepoService.findByUserId(likes.getUserId()).get();
+        Optional<Media> media = mediaService.getMediaById(likes.getMediaId());
+        mediaLike.setUser(user);
+        mediaLike.setMedia(media.get());
 
         if (media.isPresent()) {
             List<Interests> userInterest = user.getInterests();
@@ -43,10 +52,8 @@ public class LikesServiceImpl implements LikesService {
             }
             user.setInterests(new ArrayList<>(interestsMap.values()));
             userRepoService.save(user);
-//            System.out.println();
-
         }
-        return new ResponseEntity<>(likesRepoService.save(likes), HttpStatus.OK);
+        return new ResponseEntity<>(likesRepoService.save(mediaLike), HttpStatus.OK);
     }
 
     @Override

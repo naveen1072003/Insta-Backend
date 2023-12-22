@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Table
@@ -12,6 +14,7 @@ import java.sql.Timestamp;
 @Data
 @EntityListeners(AuditingEntityListener.class)
 public class Chats {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

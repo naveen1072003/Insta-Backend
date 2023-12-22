@@ -4,12 +4,14 @@ import com.insta.instadb.auth.JwtService;
 import com.insta.instadb.auth.UserDetailsInfo;
 import com.insta.instadb.dto.LoginDTO;
 import com.insta.instadb.dto.LoginResponseDTO;
-import com.insta.instadb.dto.UpdateUserDTO;
+import com.insta.instadb.dto.UserDTO;
 import com.insta.instadb.entity.Connectiondetails;
 import com.insta.instadb.entity.User;
 import com.insta.instadb.repository.service.UserRepoService;
 import com.insta.instadb.service.ConnectionService;
 import com.insta.instadb.service.UserService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +45,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public ResponseEntity<?> saveNewUser(User user) {
         if (checkIfUser(user.getEmail())) {
@@ -60,13 +65,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public ResponseEntity<?> updateUserDetails(UpdateUserDTO updateUserDTO) {
-        User user = userRepoService.getUserById(updateUserDTO.getUserDTO().getUserId()).get();
-        user.setDateOfBirth(updateUserDTO.getUserDTO().getDateOfBirth());
-        user.setFirstName(updateUserDTO.getUserDTO().getFirstName());
-        user.setLastName(updateUserDTO.getUserDTO().getLastName());
-        user.setPhNo(updateUserDTO.getUserDTO().getPhNo());
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+    public ResponseEntity<?> updateUserDetails(UserDTO updateUserDTO) {
+        User user = userRepoService.getUserById(updateUserDTO.getUserId()).get();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        modelMapper.map(updateUserDTO,user);
         return new ResponseEntity<>(userRepoService.save(user), HttpStatus.OK);
     }
 

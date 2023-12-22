@@ -2,6 +2,7 @@ package com.insta.instadb.config;
 
 import com.insta.instadb.filter.JwtAuthFilter;
 import com.insta.instadb.service.Impl.UserServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

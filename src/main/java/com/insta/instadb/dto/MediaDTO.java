@@ -16,11 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 public class MediaDTO {
 
-    private String mediaContent;
+    private Long id;
+
+    private String mediaPath;
 
     private String mediaType;
 
     private User users;
+
+    private boolean isLiked;
 
     private LocalDateTime scheduledTime;
 
